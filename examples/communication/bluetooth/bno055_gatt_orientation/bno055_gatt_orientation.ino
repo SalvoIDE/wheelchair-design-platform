@@ -104,7 +104,7 @@ void setup(void) {
     error(F("Could not set device name."));
   }
 
-  // Add the IMU Service definition
+  // Add the IMU Service definition02118833-4455-6677-8899-AABBCCDDEEFF
   success = ble.sendCommandWithIntReply( F("AT+GATTADDSERVICE=UUID128=00-11-00-11-44-55-66-77-88-99-AA-BB-CC-DD-EE-FF"), &imuServiceId);
   if (! success) {
     error(F("Could not add Orientation service."));
@@ -130,7 +130,7 @@ void orientation() {
   float quatX = quat.x();
   float quatY = quat.y();
   float quatZ = quat.z();
-  
+
   // Command is sent when \n (\r) or println is called
   // AT+GATTCHAR=CharacteristicID,value
   ble.print( F("AT+GATTCHAR=") );
