@@ -19,7 +19,7 @@
 
 
 // Here, we set the delay, in ms,  between fresh samples (the sample rate)
-#define DELAY_MS 1000
+#define DELAY_MS 200
 
 // Creating our sensor object to handle the sensor, with initialization 12345
 Adafruit_BNO055 bno = Adafruit_BNO055(12345);
@@ -48,23 +48,23 @@ int8_t temperature;                     // for reading temperature values (8 byt
 void setup(void)
 {
   Serial.begin(9600);
-  Serial.println("Lets begin our Orientation Sensor Test"); Serial.println("");
+//  Serial.println("Lets begin our Orientation Sensor Test"); Serial.println("");
 
   /* Initialise the sensor */
   if(!bno.begin())
   {
     /* Problem detecting the BNO055 ... wiring error */
-    Serial.print("No BNO055 is detected ... Check your wiring or I2C ADDR!");
+//    Serial.print("No BNO055 is detected ... Check your wiring or I2C ADDR!");
     while(1);
   }
 
   delay(1000);
 
   /* Display some basic information on this sensor */
-  displaySensorDetails();
+//  displaySensorDetails();
 
   /* Optional: Display current status */
-  displaySensorStatus();
+//  displaySensorStatus();
 
   bno.setExtCrystalUse(true);       // by doing this we are using an external 32khz
                                     // crystal (the one on the development board)
@@ -98,100 +98,107 @@ void loop(void)
 
   /* Display the floating point data */
   
-  Serial.println("euler:");
-  Serial.println("");
-  Serial.print("X: ");
-  Serial.print(euler_vector.x());
-  Serial.print(" Y: ");
-  Serial.print(euler_vector.y());
-  Serial.print(" Z: ");
-  Serial.print(euler_vector.z());
-  Serial.println("");
-  Serial.println("");
+//  Serial.println("euler:");
+//  Serial.println("");
+//  Serial.print("X: ");
+//  Serial.print(euler_vector.x());
+//  Serial.print(" Y: ");
+//  Serial.print(euler_vector.y());
+//  Serial.print(" Z: ");
+//  Serial.print(euler_vector.z());
+//  Serial.println("");
+//  Serial.println("");
 
-  delay(50);
+//  delay(50);
+//
+//  Serial.println("magnetometer:");
+//  Serial.println("");
+//  Serial.print("X: ");
+//  Serial.print(magnetometer_vector.x());
+//  Serial.print(" Y: ");
+//  Serial.print(magnetometer_vector.y());
+//  Serial.print(" Z: ");
+//  Serial.print(magnetometer_vector.z());
+//  Serial.println("");
+//  Serial.println("");
 
-  Serial.println("magnetometer:");
-  Serial.println("");
-  Serial.print("X: ");
-  Serial.print(magnetometer_vector.x());
-  Serial.print(" Y: ");
-  Serial.print(magnetometer_vector.y());
-  Serial.print(" Z: ");
-  Serial.print(magnetometer_vector.z());
-  Serial.println("");
-  Serial.println("");
-
-  delay(50);
-
-  Serial.println("gyroscope:");
-  Serial.println("");
-  Serial.print("X: ");
-  Serial.print(gyroscope_vector.x());
-  Serial.print(" Y: ");
-  Serial.print(gyroscope_vector.y());
-  Serial.print(" Z: ");
-  Serial.print(gyroscope_vector.z());
-  Serial.println("");
-  Serial.println("");
-  delay(50);
+//  delay(50);
+//
+//  Serial.println("gyroscope:");
+//  Serial.println("");
+//  Serial.print("X: ");
+//  Serial.print(gyroscope_vector.x());
+//  Serial.print(" Y: ");
+//  Serial.print(gyroscope_vector.y());
+//  Serial.print(" Z: ");
+//  Serial.print(gyroscope_vector.z());
+//  Serial.println("");
+//  Serial.println("");
+//  delay(50);
   
-  Serial.println("accelerometer:");
-  Serial.println("");
-  Serial.print("X: ");
+//  Serial.println("accelerometer:");
+//  Serial.println("");
+//  Serial.print("X: ");
+//  Serial.print(accelerometer_vector.x());
+//  Serial.print(" Y: ");
+//  Serial.print(accelerometer_vector.y());
+//  Serial.print(" Z: ");
+//  Serial.print(accelerometer_vector.z());
+//  Serial.println("");
+//  Serial.println("");
+//  delay(50);
+
+  Serial.print("accelerometer-6093,");
   Serial.print(accelerometer_vector.x());
-  Serial.print(" Y: ");
+  Serial.print(",");
   Serial.print(accelerometer_vector.y());
-  Serial.print(" Z: ");
+  Serial.print(",");
   Serial.print(accelerometer_vector.z());
-  Serial.println("");
-  Serial.println("");
-  delay(50);
   
-  Serial.println("linear acceleration:");
-  Serial.println("");
-  Serial.print("X: ");
-  Serial.print(linear_accel_vector.x());
-  Serial.print(" Y: ");
-  Serial.print(linear_accel_vector.y());
-  Serial.print(" Z: ");
-  Serial.print(linear_accel_vector.z());
-  Serial.println("");
-  Serial.println("");
-  delay(50);
+//  Serial.println("linear acceleration:");
+//  Serial.println("");
+//  Serial.print("X: ");
+//  Serial.print(linear_accel_vector.x());
+//  Serial.print(" Y: ");
+//  Serial.print(linear_accel_vector.y());
+//  Serial.print(" Z: ");
+//  Serial.print(linear_accel_vector.z());
+//  Serial.println("");
+//  Serial.println("");
+//  delay(50);
   
-  Serial.println("gravity:");
-  Serial.println("");
-  Serial.print("X: ");
-  Serial.print(gravity_vector.x());
-  Serial.print(" Y: ");
-  Serial.print(gravity_vector.y());
-  Serial.print(" Z: ");
-  Serial.print(gravity_vector.z());
-  Serial.println("");
-  Serial.println("");
-  delay(50);
+//  Serial.println("gravity:");
+//  Serial.println("");
+//  Serial.print("X: ");
+//  Serial.print(gravity_vector.x());
+//  Serial.print(" Y: ");
+//  Serial.print(gravity_vector.y());
+//  Serial.print(" Z: ");
+//  Serial.print(gravity_vector.z());
+//  Serial.println("");
+//  Serial.println("");
+//  delay(50);
 
   /* Display the quaternion data, 4 decimal places */
-  Serial.println("Quaternion:");
-  Serial.print("qW: ");
-  Serial.print(quaternion.w(), 4);
-  Serial.print(" qX: ");
-  Serial.print(quaternion.y(), 4);
-  Serial.print(" qY: ");
-  Serial.print(quaternion.x(), 4);
-  Serial.print(" qZ: ");
-  Serial.print(quaternion.z(), 4);
-  Serial.println("");
-  Serial.println("");
-  delay(50);
+//  Serial.println("Quaternion:");
+//  Serial.print("qW: ");
+//  Serial.print(quaternion.w(), 4);
+//  Serial.print(" qX: ");
+//  Serial.print(quaternion.y(), 4);
+//  Serial.print(" qY: ");
+//  Serial.print(quaternion.x(), 4);
+//  Serial.print(" qZ: ");
+//  Serial.print(quaternion.z(), 4);
+//  Serial.println("");
+//  Serial.println("");
+//  delay(50);
 
-  Serial.print("Current Temperature: ");
-  Serial.println("");
-  Serial.print(temperature);
-  Serial.println(" C");
-  Serial.println("");
-  Serial.println("");
+//  Serial.print("Current Temperature: ");
+//  Serial.println("");
+//  Serial.print(temperature);
+//  Serial.println(" C");
+//  Serial.println("");
+//  Serial.println("");
   
   /* Optional: Display calibration status */
   // displayCalStatus();
