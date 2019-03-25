@@ -126,10 +126,7 @@ void setup(void) {
 
 void orientation() {
   // Get Euler angle data
-
-  imu::Vector<3> accelerometer_vector= bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER)  // for reading accelerometer vector values
-
-
+  imu::Vector<3> accelerometer_vector= bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);  // for reading accelerometer vector values
   float accX = accelerometer_vector.x();
   float accY = accelerometer_vector.y();
   float accZ = accelerometer_vector.z();
