@@ -70,7 +70,7 @@ void setup(void)
                                     // crystal (the one on the development board)
 }
 
-// Arduino loop function, called once 'setup' is complete 
+// Arduino loop function, called once 'setup' is complete
 
 void loop(void)
 {
@@ -82,22 +82,22 @@ void loop(void)
       VECTOR_LINEARACCEL (values in m/s^2)
       VECTOR_GRAVITY (values in m/s^2)
    */
-  
-  // Extracting raw data vectors 
-  euler_vector= bno.getVector(Adafruit_BNO055::VECTOR_EULER);            
-  magnetometer_vector = bno.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);     
-  gyroscope_vector = bno.getVector(Adafruit_BNO055:: VECTOR_GYROSCOPE);;        
-  accelerometer_vector = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);   
+
+  // Extracting raw data vectors
+  euler_vector= bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+  magnetometer_vector = bno.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
+  gyroscope_vector = bno.getVector(Adafruit_BNO055:: VECTOR_GYROSCOPE);;
+  accelerometer_vector = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
   linear_accel_vector = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
   gravity_vector = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
 
   // Extracting other raw data
-  quaternion = bno.getQuat();    // get quaternion helper function         
+  quaternion = bno.getQuat();    // get quaternion helper function
   temperature = bno.getTemp();   // get temperature helper function
 
 
   /* Display the floating point data */
-  
+
 //  Serial.println("euler:");
 //  Serial.println("");
 //  Serial.print("X: ");
@@ -135,7 +135,7 @@ void loop(void)
 //  Serial.println("");
 //  Serial.println("");
 //  delay(50);
-  
+
 //  Serial.println("accelerometer:");
 //  Serial.println("");
 //  Serial.print("X: ");
@@ -154,7 +154,7 @@ void loop(void)
   Serial.print(accelerometer_vector.y());
   Serial.print(",");
   Serial.print(accelerometer_vector.z());
-  
+
 //  Serial.println("linear acceleration:");
 //  Serial.println("");
 //  Serial.print("X: ");
@@ -166,7 +166,7 @@ void loop(void)
 //  Serial.println("");
 //  Serial.println("");
 //  delay(50);
-  
+
 //  Serial.println("gravity:");
 //  Serial.println("");
 //  Serial.print("X: ");
@@ -199,7 +199,7 @@ void loop(void)
 //  Serial.println(" C");
 //  Serial.println("");
 //  Serial.println("");
-  
+
   /* Optional: Display calibration status */
   // displayCalStatus();
 
@@ -273,7 +273,7 @@ void displayCalStatus(void)
 
   /* Display the individual values */
   Serial.print("Sys:");
-  Serial.print(system, DEC);        // Printing decimal values  
+  Serial.print(system, DEC);        // Printing decimal values
   Serial.print(" G:");
   Serial.print(gyro, DEC);
   Serial.print(" A:");
