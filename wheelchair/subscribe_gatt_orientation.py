@@ -40,7 +40,7 @@ def handle_orientation_data(handle, value_bytes):
     """
     print("Received data: %s (handle %d)" % (str(value_bytes), handle))
     values = [float(x) for x in value_bytes.decode('utf-8').split(",")]
-    find_or_create("Left Wheel Orientation",
+    find_or_create("surf Wheel Orientation",
                    PropertyType.THREE_DIMENSIONS).update_values(values)
 
 
@@ -61,7 +61,7 @@ def read_characteristic(device, characteristic_id):
 def keyboard_interrupt_handler(signal_num, frame):
     """Make sure we close our program properly"""
     print("Exiting...".format(signal_num))
-    left_wheel.unsubscribe(GATT_CHARACTERISTIC_ORIENTATION)
+    surf_wheel.unsubscribe(GATT_CHARACTERISTIC_ORIENTATION)
     exit(0)
 
 
@@ -74,10 +74,10 @@ bleAdapter = pygatt.GATTToolBackend()
 bleAdapter.start()
 
 # Use the BLE adapter to connect to our device
-left_wheel = bleAdapter.connect(BLUETOOTH_DEVICE_MAC, address_type=ADDRESS_TYPE)
+surf_wheel = bleAdapter.connect(BLUETOOTH_DEVICE_MAC, address_type=ADDRESS_TYPE)
 
 # Subscribe to the GATT service
-left_wheel.subscribe(GATT_CHARACTERISTIC_ORIENTATION,
+surf_wheel.subscribe(GATT_CHARACTERISTIC_ORIENTATION,
                      callback=handle_orientation_data)
 
 # Register our Keyboard handler to exit
