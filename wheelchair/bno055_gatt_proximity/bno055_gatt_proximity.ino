@@ -34,14 +34,12 @@
 
 #include "BluefruitConfig.h"
 
-// LED error flag
-#define LED_PIN 13
-
 // Create the Bluefruit object for Feather 32u4
 Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 
 // BNO settings
-#define BNO055_SAMPLERATE_DELAY_MS (200)
+#define BNO055_SAMPLERATE_DELAY_MS (100)
+
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
 // GATT service information
@@ -53,9 +51,6 @@ void error(const __FlashStringHelper*err) {
   if (Serial.available()) {
     Serial.println(err);
   }
-  // In any case, turn on the LED to signal the error
-  analogWrite(LED_PIN, HIGH);
-  while (1);
 }
 
 // Initializes BNO055 sensor
@@ -76,17 +71,13 @@ int deviation = 0;                       // setting the minimum deviation betwee
 // Sets up the HW an the BLE module (this function is called
 // automatically on startup)
 void setup(void) {
-  delay(500);
+  delay(300);
   boolean success;
 
   pinMode(PROXIMITY_PIN, INPUT);                // setting pinmode to read analog value 
 
   deviation = 10;
 
-  // Set LED error flag
-
-  pinMode(LED_PIN, OUTPUT);
-  analogWrite(LED_PIN, LOW);
   Serial.begin(115200);
 
   // Initialise the module
@@ -148,7 +139,6 @@ void proximity() {
   prev_value = value;             // Here we have the previous saved variable.
 
 
-  
   // Command is sent when \n (\r) or println is called
   // AT+GATTCHAR=CharacteristicID,value
   ble.print( F("AT+GATTCHAR=") );
