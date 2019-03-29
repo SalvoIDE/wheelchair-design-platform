@@ -21,11 +21,27 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_PIN, NEO_GRB + NEO_K
 
 int delayval = 500; // delay for half a second
 boolean tired = false;
-
-//void vibration_enabled() {
-//}
+int i = 127;       // Our counter for PWM, we declare it globally,
 
 
+void vibration_enabled() {
+  if (increase) {
+    i+=10;  // incrementing the power of the vibration motor
+  } else {
+    i-=10;
+  }
+
+  if ( i > 255) {
+    increase = false;
+  } else if ( i < 127) {
+    increase = true;
+}
+
+  Serial.print("Vibration intensity (127 to 255):  ");
+  Serial.println(i);
+  analogWrite(VIB_PIN, i);
+  delay(50); // in each step of pwm, we vibrate for i * 0.01 seconds
+}
 
 void green_led(){
 
@@ -65,7 +81,7 @@ void yellow_led() {
 
 }
 
-    
+
 void setup() {
   pixels.begin(); // This initializes the NeoPixel library.
   Serial.begin(9600);
@@ -80,24 +96,24 @@ void loop() {
   // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
 char command = Serial.read();
   if (command == '1') {
+    vibration_enabled();
+    delay(200)
     tired = true;
   } else if (command == '0') {
     tired = false;
     green_led();
-  } 
+  }
 
 if (tired) {
-//  vibration_enabled();
   yellow_led();
   delay(500);
   }
 }
 
-//void loop() { 
+//void loop() {
 //    green_led();
 //    delay(delayval); // Delay for a period of time (in milliseconds).
 //    yellow_led();
 //    delay(delayval); // Delay for a period of time (in milliseconds).
 //
 //  }
-
