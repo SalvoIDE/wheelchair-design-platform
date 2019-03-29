@@ -170,11 +170,14 @@ void rotation() {
   // Command is sent when \n (\r) or println is called
   // AT+GATTCHAR=CharacteristicID,value
   ble.print( F("AT+GATTCHAR=") );
+//  ble.print( F(",") );
   ble.print( rotationCharId );
   ble.print( F(",") );
   ble.print( F("Rotations" ) );
   ble.print( F(",") );
-  ble.println(String(global_rotations.forward_rotations) );
+  ble.print(String(global_rotations.forward_rotations) );
+  ble.print( F(",") );
+
 }
 
 
@@ -199,11 +202,14 @@ void proximity() {
   // Command is sent when \n (\r) or println is called
   // AT+GATTCHAR=CharacteristicID,value
   ble.print( F( "AT+GATTCHAR=") );
+//  ble.print( F(",") );
   ble.print( proximityCharId );
   ble.print( F(",") );
   ble.print( F("Proximity") );
   ble.print( F(",") );
-  ble.println(String(value));
+  ble.print(String(value));
+  ble.print( F(",") );
+
 }
 
 
