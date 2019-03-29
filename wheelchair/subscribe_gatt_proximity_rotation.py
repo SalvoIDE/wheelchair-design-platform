@@ -48,7 +48,7 @@ def handle_proximity_data(handle, value_bytes):
     proximity_values = [float(x) for x in value_bytes.decode('utf-8')]
     find_or_create("Surf Wheel Proximity",
                    PropertyType.PROXIMITY).update_values(values)\
-    if proximity_values[0] > RECOMMENDED_NUM_ROTATION and not nudged:
+    if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
         ser.write('1')
         time.sleep(2)
         ser.write('0')
