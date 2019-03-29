@@ -47,7 +47,7 @@ def handle_proximity_data(handle, value_bytes):
     print("Received data: %s (handle %d)" % (str(value_bytes), handle))
     proximity_values = [float(x) for x in value_bytes.decode('utf-8')]
     find_or_create("Surf Wheel Proximity",
-                   PropertyType.PROXIMITY).update_values(values)\
+                   PropertyType.PROXIMITY).update_values(values)
     if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
         ser.write('1')
         time.sleep(2)
