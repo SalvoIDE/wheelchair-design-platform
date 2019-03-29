@@ -8,8 +8,8 @@
 
 // Which pin on the Arduino is connected to the NeoPixels?
 // On a Trinket or Gemma we suggest changing this to 1
-#define LED_PIN            7
-//#define VIB_PIN 4
+#define LED_PIN 7
+#define VIB_PIN 4
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS      10
@@ -21,6 +21,8 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_PIN, NEO_GRB + NEO_K
 
 int delayval = 500; // delay for half a second
 boolean tired = false;
+bool increase = true;
+
 int i = 127;       // Our counter for PWM, we declare it globally,
 
 
@@ -86,7 +88,7 @@ void setup() {
   pixels.begin(); // This initializes the NeoPixel library.
   Serial.begin(9600);
   pinMode(LED_PIN, OUTPUT);
-//  pinMode(VIB_PIN, OUTPUT);
+  pinMode(VIB_PIN, OUTPUT);
  pixels.show();
   Serial.println("let's start this zoo journey");
   }
@@ -97,7 +99,7 @@ void loop() {
 char command = Serial.read();
   if (command == '1') {
     vibration_enabled();
-    delay(200)
+    delay(200);
     tired = true;
   } else if (command == '0') {
     tired = false;
