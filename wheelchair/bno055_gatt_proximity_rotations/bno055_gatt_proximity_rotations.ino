@@ -20,10 +20,10 @@
 Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 
 // BNO settings
-#define BNO055_SAMPLERATE_DELAY_MS (100)
-
+#define BNO055_SAMPLERATE_DELAY_MS (400)
 
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
+
 
 // structure to store total rotations since IMU  initialized, forward and reverse
 // initialized with a global variable global_rotations, this variable stores rotations
@@ -48,7 +48,6 @@ void error(const __FlashStringHelper*err) {
   if (Serial.available()) {
     Serial.println(err);
   }
-  
 }
 
 // Initializes BNO055 sensor
@@ -63,7 +62,7 @@ void initSensor(void) {
 #define PROXIMITY_PIN  A0                       // Setting up pin to receive voltage from IR
 
 int value, prev_value = - 10000;         // int values (read from analog port, both the current and the previous)
-int deviation = 0;                       // setting the minimum deviation between the measurements (0 by default)
+//int deviation = 0;                       // setting the minimum deviation between the measurements (0 by default)
                                          // up to 512 (although that is pretty useless)
 
 // Sets up the HW an the BLE module (this function is called
@@ -74,7 +73,6 @@ void setup(void) {
 
   pinMode(PROXIMITY_PIN, INPUT);                // setting pinmode to read analog value 
 
-  deviation = 10;
 
   Serial.begin(115200);
 
@@ -121,6 +119,7 @@ void setup(void) {
     error(F("Could not add Rotation characteristic."));
   }
 
+
   // Add the Orientation Service to the advertising data
   // (needed for Nordic apps to detect the service)
   ble.sendCommandCheckOK( F("AT+GAPSETADVDATA=02-01-06-05-02-0d-18-0a-18") );
@@ -129,27 +128,6 @@ void setup(void) {
   ble.reset();
 }
 
-void proximity() {
-  // Get Euler angle data
-
-  value = analogRead(PROXIMITY_PIN);       // reading our analog voltage, careful we only have 10 bit resolution so each
-                                    // measurement step is only 5V ÷ 1024, so our result will be 0 - 1023
-
-  // if value is within the range of [ previous - σ , previous + σ], ignore it (if value is relatively the same)
-  // this will help with having data ocuppy your buffer that is not a significant deviation.
-  if( value >= (prev_value - deviation) && value <= (prev_value + deviation) )
-    return;
-
-  prev_value = value;             // Here we have the previous saved variable.
-
-
-  // Command is sent when \n (\r) or println is called
-  // AT+GATTCHAR=CharacteristicID,value
-  ble.print( F("AT+GATTCHAR=") );
-  ble.print( proximityCharId );
-  ble.print( F(",") );
-  ble.print(String(value));
-}
 
 
 bool compute_rotations(float axis, Rotations * rotations) {
@@ -165,7 +143,7 @@ bool compute_rotations(float axis, Rotations * rotations) {
     offset_rot = 0;
   }
 
-  if(offset_rot >= 0) {
+    if(offset_rot >= 0) {
     (rotations->forward_rotations) += offset_rot;
   } else {
     (rotations->reverse_rotations) += offset_rot;
@@ -182,9 +160,9 @@ void rotation() {
   sensors_event_t event;
   bno.getEvent(&event);
 
-  // if this is the first loop iteration, ignore position data (always zero)  
-  //if its second loop iteration set the starting position for your axis 
-  // if its another iteration, just continue computing the rotation data 
+  // if this is the first loop iteration, ignore position data (always zero)
+  //if its second loop iteration set the starting position for your axis
+  // if its another iteration, just continue computing the rotation data
 
   float axis_value = event.orientation.x;   // replace this with whatever axis you're tracking
   not_first_loop = (not_first_loop)?compute_rotations(axis_value, &global_rotations) : true;
@@ -194,17 +172,46 @@ void rotation() {
   ble.print( F("AT+GATTCHAR=") );
   ble.print( rotationCharId );
   ble.print( F(",") );
-  ble.print(String(global_rotations.forward_rotations));
+  ble.print( F("Rotations" ) );
   ble.print( F(",") );
-  ble.println(String(-global_rotations.reverse_rotations));
+  ble.println(String(global_rotations.forward_rotations) );
 }
 
+
+
+void proximity() {
+  // Get Euler angle data
+
+  value = analogRead(PROXIMITY_PIN);       // reading our analog voltage, careful we only have 10 bit resolution so each
+                                    // measurement step is only 5V ÷ 1024, so our result will be 0 - 1023
+
+  // if value is within the range of [ previous - σ , previous + σ], ignore it (if value is relatively the same)
+//  // this will help with having data ocuppy your buffer that is not a significant deviation.
+//  if( value >= (prev_value - deviation) && value <= (prev_value + deviation) )
+//    return;
+//
+///UNCOMMENT TO IGNORE MORE
+
+
+  prev_value = value;             // Here we have the previous saved variable.
+
+
+  // Command is sent when \n (\r) or println is called
+  // AT+GATTCHAR=CharacteristicID,value
+  ble.print( F( "AT+GATTCHAR=") );
+  ble.print( proximityCharId );
+  ble.print( F(",") );
+  ble.print( F("Proximity") );
+  ble.print( F(",") );
+  ble.println(String(value));
+}
 
 
 void loop(void) {
 
   proximity();
   rotation();
+
 
   // Check if command executed OK
   if ( !ble.waitForOK() ) {

@@ -30,7 +30,6 @@ Adafruit_BNO055 bno = Adafruit_BNO055(55);
 // on a particular axis, in both directions, since startup
 struct Rotations {
   float forward_rotations = 0;
-  float reverse_rotations = 0;
 } global_rotations;
 
 bool not_first_loop = false; // Boolean variable to stop logging of first loop
@@ -39,7 +38,6 @@ float previous_axis_value = 666;  // Initial value so we don't account for it
 
 // GATT service information
 int32_t imuServiceId;
-int32_t proximityCharId;
 int32_t rotationCharId;
 
 
@@ -48,7 +46,7 @@ void error(const __FlashStringHelper*err) {
   if (Serial.available()) {
     Serial.println(err);
   }
-  
+
 }
 
 // Initializes BNO055 sensor
@@ -60,21 +58,11 @@ void initSensor(void) {
   bno.setExtCrystalUse(true);
 }
 
-#define PROXIMITY_PIN  A0                       // Setting up pin to receive voltage from IR
-
-int value, prev_value = - 10000;         // int values (read from analog port, both the current and the previous)
-int deviation = 0;                       // setting the minimum deviation between the measurements (0 by default)
-                                         // up to 512 (although that is pretty useless)
-
 // Sets up the HW an the BLE module (this function is called
 // automatically on startup)
 void setup(void) {
   delay(300);
   boolean success;
-
-  pinMode(PROXIMITY_PIN, INPUT);                // setting pinmode to read analog value 
-
-  deviation = 10;
 
   Serial.begin(115200);
 
@@ -109,11 +97,6 @@ void setup(void) {
     error(F("Could not add Orientation service."));
   }
 
-  // Add the Proximity characteristic
-  success = ble.sendCommandWithIntReply( F("AT+GATTADDCHAR=UUID128=02-11-88-33-44-55-66-77-88-99-AA-BB-CC-DD-EE-FF,PROPERTIES=0x10,MIN_LEN=1,MAX_LEN=17,VALUE=\"\""), &proximityCharId);
-  if (! success) {
-    error(F("Could not add Proximity characteristic."));
-  }
 
 // Add the Rotation characteristic
   success = ble.sendCommandWithIntReply( F("AT+GATTADDCHAR=UUID128=06-11-87-33-44-55-66-77-88-99-AA-BB-CC-DD-EE-FF,PROPERTIES=0x10,MIN_LEN=1,MAX_LEN=12,VALUE=\"\""), &rotationCharId);
@@ -129,27 +112,6 @@ void setup(void) {
   ble.reset();
 }
 
-void proximity() {
-  // Get Euler angle data
-
-  value = analogRead(PROXIMITY_PIN);       // reading our analog voltage, careful we only have 10 bit resolution so each
-                                    // measurement step is only 5V ÷ 1024, so our result will be 0 - 1023
-
-  // if value is within the range of [ previous - σ , previous + σ], ignore it (if value is relatively the same)
-  // this will help with having data ocuppy your buffer that is not a significant deviation.
-  if( value >= (prev_value - deviation) && value <= (prev_value + deviation) )
-    return;
-
-  prev_value = value;             // Here we have the previous saved variable.
-
-
-  // Command is sent when \n (\r) or println is called
-  // AT+GATTCHAR=CharacteristicID,value
-  ble.print( F("AT+GATTCHAR=") );
-  ble.print( proximityCharId );
-  ble.print( F(",") );
-  ble.print(String(value));
-}
 
 
 bool compute_rotations(float axis, Rotations * rotations) {
@@ -167,10 +129,8 @@ bool compute_rotations(float axis, Rotations * rotations) {
 
   if(offset_rot >= 0) {
     (rotations->forward_rotations) += offset_rot;
-  } else {
-    (rotations->reverse_rotations) += offset_rot;
-  }
-
+  } 
+  
   // place previous axis value
   previous_axis_value = axis;
 
@@ -182,9 +142,9 @@ void rotation() {
   sensors_event_t event;
   bno.getEvent(&event);
 
-  // if this is the first loop iteration, ignore position data (always zero)  
-  //if its second loop iteration set the starting position for your axis 
-  // if its another iteration, just continue computing the rotation data 
+  // if this is the first loop iteration, ignore position data (always zero)
+  //if its second loop iteration set the starting position for your axis
+  // if its another iteration, just continue computing the rotation data
 
   float axis_value = event.orientation.x;   // replace this with whatever axis you're tracking
   not_first_loop = (not_first_loop)?compute_rotations(axis_value, &global_rotations) : true;
@@ -195,15 +155,12 @@ void rotation() {
   ble.print( rotationCharId );
   ble.print( F(",") );
   ble.print(String(global_rotations.forward_rotations));
-  ble.print( F(",") );
-  ble.println(String(-global_rotations.reverse_rotations));
 }
 
 
 
 void loop(void) {
 
-  proximity();
   rotation();
 
   // Check if command executed OK
