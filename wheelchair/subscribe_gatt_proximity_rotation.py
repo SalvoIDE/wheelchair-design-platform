@@ -24,7 +24,12 @@ GATT_CHARACTERISTIC_ROTATION= "06118733-4455-6677-8899-AABBCCDDEEFF"
 
 # Many devices, e.g. Fitbit, use random addressing, this is required to connect.
 ADDRESS_TYPE = pygatt.BLEAddressType.random
+# Recommended number of rotation
+RECOMMENDED_NUM_ROTATION = 3
+# Did we already nudged
+nudged = False
 
+USER_STATUS_BEHIND = 4
 
 def find_or_create(property_name, property_type):
     """Search a property by name, create it if not found, then return it."""
@@ -40,9 +45,15 @@ def handle_proximity_data(handle, value_bytes):
     value_bytes -- bytearray, the data returned in the notification
     """
     print("Received data: %s (handle %d)" % (str(value_bytes), handle))
-    values = [float(x) for x in value_bytes.decode('utf-8')]
+    proximity_values = [float(x) for x in value_bytes.decode('utf-8')]
     find_or_create("Surf Wheel Proximity",
-                   PropertyType.PROXIMITY).update_values(values)
+                   PropertyType.PROXIMITY).update_values(values)\
+    if proximity_values[0] > RECOMMENDED_NUM_ROTATION and not nudged:
+        ser.write('1')
+        time.sleep(2)
+        ser.write('0')
+        global nudged
+        nudged = True
 
 def handle_rotation_data(handle, value_bytes):
     """
@@ -53,12 +64,18 @@ def handle_rotation_data(handle, value_bytes):
 
     try:
 
-        values = [float(x) for x in value_bytes.decode('utf-8').split(",")]
+        rotation_values = [float(x) for x in value_bytes.decode('utf-8').split(",")]
         find_or_create("Surf Wheel Rotation",
                        PropertyType.THREE_DIMENSIONS).update_values(values)
     except:
         print("cant parse")
 
+    if rotation_values[0] > RECOMMENDED_NUM_ROTATION and not nudged:
+        ser.write('1')
+        time.sleep(300)
+        ser.write('0')
+        global nudged
+        nudged = True
 
 def discover_characteristic(device):
     """List characteristics of a device"""

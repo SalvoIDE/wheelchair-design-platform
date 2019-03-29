@@ -23,12 +23,14 @@ THING_TOKEN = os.environ['THING_TOKEN']
 BLUETOOTH_DEVICE_MAC = os.environ['BLUETOOTH_DEVICE_MAC']
 
 # UUID of the GATT characteristic to subscribe
-GATT_CHARACTERISTIC_ROTATION = "02118733-4455-6677-8899-AABBCCDDEEFF"
+GATT_CHARACTERISTIC_PROXIMITY= "02118833-4455-6677-8899-AABBCCDDEEFF"
+GATT_CHARACTERISTIC_ROTATION= "06118733-4455-6677-8899-AABBCCDDEEFF"
+
 # Many devices, e.g. Fitbit, use random addressing, this is required to connect.
 ADDRESS_TYPE = pygatt.BLEAddressType.random
 
 # Recommended number of rotation
-RECOMMENDED_NUM_ROTATION = 10
+RECOMMENDED_NUM_ROTATION = 3
 # Did we already nudged
 nudged = False
 

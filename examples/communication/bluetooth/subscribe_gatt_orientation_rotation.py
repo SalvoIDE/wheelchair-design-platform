@@ -51,7 +51,7 @@ def handle_rotation_data(handle, value_bytes):
     value_bytes -- bytearray, the data returned in the notification
     """
     print("Received data: %s (handle %d)" % (str(value_bytes), handle))
-    values = [float(x) for x in value_bytes.decode('utf-8').split(",")]
+    rotation_values = [float(x) for x in value_bytes.decode('utf-8').split(",")]
     find_or_create("Left Wheel Rotation",
                    PropertyType.TWO_DIMENSIONS).update_values(values)
 
