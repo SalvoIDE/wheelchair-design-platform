@@ -79,7 +79,7 @@ def handle_rotation_data(handle, value_bytes):
 
         print("findorcreate")
 
-        if rotation_values > RECOMMENDED_NUM_ROTATION and not nudged:
+        if rotation_values > RECOMMENDED_NUM_ROTATION:
             ser.write('1')
             time.sleep(3)
             ser.write('0')
