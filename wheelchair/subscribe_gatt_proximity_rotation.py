@@ -59,11 +59,12 @@ def handle_rotation_data(handle, value_bytes):
     handle -- integer, characteristic read handle the data was received on
     value_bytes -- bytearray, the data returned in the notification
     """
-    print("Received data: %s (handle %d)" % (str(value_bytes), handle))
+    value_str = value_bytes.decode('utf-8')
+    print("Received data: %s (handle %d)" % (value_str, handle))
 
     try:
 
-        rotation_values = float(value_bytes.decode('utf-8'))
+        rotation_values = float(value_str)
         find_or_create("Surf Wheel Rotation",
                        PropertyType.ONE_DIMENSION).update_values(values)
 
