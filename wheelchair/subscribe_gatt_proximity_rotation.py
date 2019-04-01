@@ -75,24 +75,22 @@ def handle_rotation_data(handle, value_bytes):
         rotation_values = float(value_str)
         print(rotation_values)
 
-        while rotation_values > RECOMMENDED_NUM_ROTATION:
-            ser.write('1')
-            time.sleep(3)
-            RECOMMENDED_NUM_ROTATION = RECOMMENDED_NUM_ROTATION + rotation_values
-            
-        find_or_create("Surf Wheel Rotation",
+        find_or_create("surf-wheel-rotation-df50",
                        PropertyType.ONE_DIMENSION).update_values([rotation_values])
 
         print("findorcreate")
 
+        while rotation_values > RECOMMENDED_NUM_ROTATION:
+            ser.write('1')
+            time.sleep(3)
+            RECOMMENDED_NUM_ROTATION = RECOMMENDED_NUM_ROTATION + rotation_vlues
 
-
-        # if rotation_values > RECOMMENDED_NUM_ROTATION:
-        #     ser.write('1')
-        #     time.sleep(3)
-        #     ser.write('0')
-        #     global nudged
-        #     nudged = True
+        if rotation_values > RECOMMENDED_NUM_ROTATION == True:
+            ser.write('1')
+            time.sleep(3)
+            ser.write('0')
+            global nudged
+            nudged = True
     except:
         print("cant parse")
 
