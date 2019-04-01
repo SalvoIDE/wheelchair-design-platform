@@ -86,10 +86,15 @@ def handle_rotation_data(handle, value_bytes):
         #     RECOMMENDED_NUM_ROTATION = RECOMMENDED_NUM_ROTATION + rotation_vlues
 
         if rotation_values > 1:
-            ser.write('1')
+            print("i am inside")
+            ser.write('1'.encode())
+            print("i am inside 2")
             time.sleep(3)
-            ser.write('0')
+            print("in am inside 3")
+            ser.write('0'.encode())
+            print("before global")
             global nudged
+            print("after global")
             nudged = True
     except:
         print("cant parse")
