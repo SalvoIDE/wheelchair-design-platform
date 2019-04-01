@@ -53,12 +53,12 @@ def handle_proximity_data(handle, value_bytes):
         proximity_values = [float(value_str)]
         find_or_create("Surf Wheel Proximity",
                        PropertyType.PROXIMITY).update_values(proximity_values)
-        # if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
-        #     ser.write('0')
-        #     time.sleep(2)
-        #     ser.write('0')
-        #     global nudged
-        #     nudged = True
+        if proximity_values > 440:
+            ser.write('1')
+            time.sleep(8)
+            ser.write('0')
+            global nudged
+            nudged = True
     except:
         print("cant parse " + str(value_bytes))
 
