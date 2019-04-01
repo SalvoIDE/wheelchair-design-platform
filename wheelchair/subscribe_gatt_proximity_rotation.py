@@ -24,7 +24,7 @@ GATT_CHARACTERISTIC_ROTATION= "06118733-4455-6677-8899-AABBCCDDEEFF"
 # Many devices, e.g. Fitbit, use random addressing, this is required to connect.
 ADDRESS_TYPE = pygatt.BLEAddressType.random
 # Recommended number of rotation
-RECOMMENDED_NUM_ROTATION = 3
+RECOMMENDED_NUM_ROTATION = 6
 # Did we already nudged
 nudged = False
 
