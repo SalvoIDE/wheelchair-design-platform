@@ -175,8 +175,7 @@ void rotation() {
   ble.print( F(",") );
   ble.print( F("Rotations" ) );
   ble.print( F(",") );
-  ble.print(String(global_rotations.forward_rotations) );
-  ble.print( F(",") );
+  ble.println(String(global_rotations.forward_rotations) );
 
 }
 
@@ -207,8 +206,7 @@ void proximity() {
   ble.print( F(",") );
   ble.print( F("Proximity") );
   ble.print( F(",") );
-  ble.print(String(value));
-  ble.print( F(",") );
+  ble.println(String(value));
 
 }
 
