@@ -80,12 +80,17 @@ def handle_rotation_data(handle, value_bytes):
 
         print("findorcreate")
 
-        if rotation_values > RECOMMENDED_NUM_ROTATION:
+        while rotation_values > RECOMMENDED_NUM_ROTATION:
             ser.write('1')
             time.sleep(3)
-            ser.write('0')
-            global nudged
-            nudged = True
+            RECOMMENDED_NUM_ROTATION = RECOMMENDED_NUM_ROTATION + rotation_values
+
+        # if rotation_values > RECOMMENDED_NUM_ROTATION:
+        #     ser.write('1')
+        #     time.sleep(3)
+        #     ser.write('0')
+        #     global nudged
+        #     nudged = True
     except:
         print("cant parse")
 
