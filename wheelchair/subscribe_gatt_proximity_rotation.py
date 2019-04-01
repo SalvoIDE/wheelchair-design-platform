@@ -43,17 +43,20 @@ def handle_proximity_data(handle, value_bytes):
     handle -- integer, characteristic read handle the data was received on
     value_bytes -- bytearray, the data returned in the notification
     """
-    value_str = value_bytes.decode('utf-8')
-    print("Received data: %s (handle %d)" % (value_str, handle))
-    proximity_value = float(value_str)
-    find_or_create("Surf Wheel Proximity",
-                   PropertyType.PROXIMITY).update_values([proximity_value])
-    if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
-        ser.write('1')
-        time.sleep(2)
-        ser.write('0')
-        global nudged
-        nudged = True
+    try:
+        value_str = value_bytes.decode('utf-8')
+        print("Received data: %s (handle %d)" % (value_str, handle))
+        proximity_values = [float(value_str)]
+        find_or_create("Surf Wheel Proximity",
+                       PropertyType.PROXIMITY).update_values(proximity_values)
+        if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
+            ser.write('1')
+            time.sleep(2)
+            ser.write('0')
+            global nudged
+            nudged = True
+    except:
+        print("cant parse " + value_bytes)
 
 def handle_rotation_data(handle, value_bytes):
     """
