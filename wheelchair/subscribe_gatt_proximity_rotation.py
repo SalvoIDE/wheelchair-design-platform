@@ -80,12 +80,12 @@ def handle_rotation_data(handle, value_bytes):
 
         print("findorcreate")
 
-        while rotation_values > RECOMMENDED_NUM_ROTATION:
-            ser.write('1')
-            time.sleep(3)
-            RECOMMENDED_NUM_ROTATION = RECOMMENDED_NUM_ROTATION + rotation_vlues
+        # while rotation_values > RECOMMENDED_NUM_ROTATION:
+        #     ser.write('1')
+        #     time.sleep(3)
+        #     RECOMMENDED_NUM_ROTATION = RECOMMENDED_NUM_ROTATION + rotation_vlues
 
-        if rotation_values > RECOMMENDED_NUM_ROTATION == True:
+        if rotation_values > RECOMMENDED_NUM_ROTATION:
             ser.write('1')
             time.sleep(3)
             ser.write('0')
