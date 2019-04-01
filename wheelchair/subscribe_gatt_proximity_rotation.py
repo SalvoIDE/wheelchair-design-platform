@@ -80,11 +80,11 @@ def handle_rotation_data(handle, value_bytes):
     print("Received data: %s (handle %d)" % (value_str, handle))
 
     try:
-        rotation_values = float(value_str)
+        rotation_values = [float(value_str)]
         print(rotation_values)
 
         find_or_create("surf-wheel-rotation-df50",
-                       PropertyType.ONE_DIMENSION).update_values([rotation_values])
+                       PropertyType.ONE_DIMENSION).update_values(rotation_values)
 
         print("findorcreate")
 
