@@ -71,12 +71,13 @@ def handle_rotation_data(handle, value_bytes):
     print("Received data: %s (handle %d)" % (value_str, handle))
 
     try:
-
         rotation_values = float(value_str)
         print(rotation_values)
 
-        find_or_create("Surf Wheel Rotation",
+        find_or_create("surf-wheel-rotation-df50",
                        PropertyType.ONE_DIMENSION).update_values([rotation_values])
+
+        print("findorcreate")
 
         if rotation_values > RECOMMENDED_NUM_ROTATION and not nudged:
             ser.write('1')
