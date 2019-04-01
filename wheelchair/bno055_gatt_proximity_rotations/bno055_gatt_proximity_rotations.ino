@@ -206,7 +206,7 @@ void proximity() {
   ble.print( F(",") );
 //  ble.print( F("Proximity") );
 //  ble.print( F(",") );
-  ble.println(String(value));
+  ble.println(String(value) + ".0");
 
 }
 

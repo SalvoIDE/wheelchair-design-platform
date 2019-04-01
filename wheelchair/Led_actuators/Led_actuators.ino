@@ -8,8 +8,9 @@
 
 // Which pin on the Arduino is connected to the NeoPixels?
 // On a Trinket or Gemma we suggest changing this to 1
-#define LED_PIN 7
+#define LED_PIN 2
 #define VIB_PIN 4
+
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS      10
@@ -19,18 +20,24 @@
 // example for more information on possible values.
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
+int i = 255;
 int delayval = 500; // delay for half a second
 boolean tired = false;
 boolean vibration = false;
-int i = 150;       // Our counter for PWM, we declare it globally,
-int d = 0;
+
 
 void vibration_enabled() {
-  Serial.println("vibrating on");
-  analogWrite(VIB_PIN, i);
-  delay(100);
-  analogWrite(VIB_PIN, d);
+   Serial.println("vibrating on");
+   analogWrite(VIB_PIN, i);
+   delay(550);
+   analogWrite(VIB_PIN, 0);
+   delay(100);
+   analogWrite(VIB_PIN, i);
+   delay(100);
+   analogWrite(VIB_PIN, 0);
+   delay(200);
 }
+
 
 void green_led(){
 
@@ -68,45 +75,49 @@ void yellow_led() {
     pixels.setPixelColor(9, pixels.Color(150,150,0)); // Moderately bright green color.
     pixels.show(); // This sends the updated pixel color to the hardware.
 
+
 }
 
 
 void setup() {
+  pinMode(VIB_PIN, OUTPUT);
+  Serial.println("let's start this zoo journey");
   pixels.begin(); // This initializes the NeoPixel library.
   Serial.begin(9600);
   pinMode(LED_PIN, OUTPUT);
-  pinMode(VIB_PIN, OUTPUT);
+//  pinMode(VIB_PIN, OUTPUT);
  pixels.show();
-  Serial.println("let's start this zoo journey");
   }
 
 void loop() {
-
-  // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
 char command = Serial.read();
   if (command == '1') {
     tired = true;
-    vibration = true; //how to make it vibrate only after a 0, not after a 1
+//    vibration = true; //how to make it vibrate only after a 0, not after a 1
+//    delay (200)
+//    vibtarion = false
   } else if (command == '0') {
     tired = false;
-    vibration = false;
     green_led();
+//    vibration = false;
   }
-
-if (vibration) {
-  vibration_enabled();
-}
+//
+//  if (vibration) {
+//  vibration_enabled();
+//  }
+//  
 
 if (tired) {
   yellow_led();
-  delay(500);
+  vibration_enabled();
   }
 }
+  
 
 //void loop() {
 //    green_led();
-//    delay(delayval); // Delay for a period of time (in milliseconds).
+//    delay(300); // Delay for a period of time (in milliseconds).
 //    yellow_led();
-//    delay(delayval); // Delay for a period of time (in milliseconds).
-//
+//    delay(300); // Delay for a period of time (in milliseconds).
+////
 //  }

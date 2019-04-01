@@ -54,9 +54,9 @@ def handle_proximity_data(handle, value_bytes):
         find_or_create("Surf Wheel Proximity",
                        PropertyType.PROXIMITY).update_values(proximity_values)
         if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
-            ser.write('1')
-            time.sleep(2)
             ser.write('0')
+            # time.sleep(2)
+            # ser.write('0')
             global nudged
             nudged = True
     except:
