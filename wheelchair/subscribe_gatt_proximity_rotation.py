@@ -24,7 +24,7 @@ GATT_CHARACTERISTIC_ROTATION= "06118733-4455-6677-8899-AABBCCDDEEFF"
 # Many devices, e.g. Fitbit, use random addressing, this is required to connect.
 ADDRESS_TYPE = pygatt.BLEAddressType.random
 # Recommended number of rotation
-RECOMMENDED_NUM_ROTATION = 1
+# RECOMMENDED_NUM_ROTATION = 1
 # Did we already nudged
 nudged = False
 
@@ -67,6 +67,7 @@ def handle_rotation_data(handle, value_bytes):
     handle -- integer, characteristic read handle the data was received on
     value_bytes -- bytearray, the data returned in the notification
     """
+    RECOMMENDED_NUM_ROTATION = 1
     value_str = value_bytes.decode('utf-8')
     print("Received data: %s (handle %d)" % (value_str, handle))
 
