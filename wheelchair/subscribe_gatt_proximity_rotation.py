@@ -56,7 +56,7 @@ def handle_proximity_data(handle, value_bytes):
             global nudged
             nudged = True
     except:
-        print("cant parse " + value_bytes)
+        print("cant parse " + str(value_bytes))
 
 def handle_rotation_data(handle, value_bytes):
     """
