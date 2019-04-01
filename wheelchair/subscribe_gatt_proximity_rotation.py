@@ -28,7 +28,7 @@ RECOMMENDED_NUM_ROTATION = 3
 # Did we already nudged
 nudged = False
 
-USER_STATUS_BEHIND = 4
+# USER_STATUS_BEHIND = 600
 
 def find_or_create(property_name, property_type):
     """Search a property by name, create it if not found, then return it."""
@@ -53,12 +53,12 @@ def handle_proximity_data(handle, value_bytes):
         proximity_values = [float(value_str)]
         find_or_create("Surf Wheel Proximity",
                        PropertyType.PROXIMITY).update_values(proximity_values)
-        if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
-            ser.write('0')
-            time.sleep(2)
-            ser.write('0')
-            global nudged
-            nudged = True
+        # if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
+        #     ser.write('0')
+        #     time.sleep(2)
+        #     ser.write('0')
+        #     global nudged
+        #     nudged = True
     except:
         print("cant parse " + str(value_bytes))
 
@@ -80,7 +80,7 @@ def handle_rotation_data(handle, value_bytes):
 
         if rotation_values[0] > RECOMMENDED_NUM_ROTATION and not nudged:
             ser.write('1')
-            time.sleep(300)
+            time.sleep(1000)
             ser.write('0')
             global nudged
             nudged = True
