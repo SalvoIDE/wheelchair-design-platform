@@ -44,6 +44,7 @@ def handle_proximity_data(handle, value_bytes):
     value_bytes -- bytearray, the data returned in the notification
     """
 
+    print(str(value_bytes))
     value_str = value_bytes.decode('utf-8')
     print(value_str)
 
