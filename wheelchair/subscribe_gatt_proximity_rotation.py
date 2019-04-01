@@ -61,10 +61,10 @@ def handle_proximity_data(handle, value_bytes):
         proximity_values = [float(value_str)]
         find_or_create("Surf Wheel Proximity",
                        PropertyType.PROXIMITY).update_values(proximity_values)
-        if proximity_values > 440:
-            ser.write('1')
+        if proximity_values[0] > 440:
+            ser.write('1'.encode())
             time.sleep(8)
-            ser.write('0')
+            ser.write('0'.encode())
             global nudged
             nudged = True
     except:
@@ -92,8 +92,11 @@ def handle_rotation_data(handle, value_bytes):
         #     ser.write('1')
         #     time.sleep(3)
         #     RECOMMENDED_NUM_ROTATION = RECOMMENDED_NUM_ROTATION + rotation_vlues
+	
+        print("My condition: ")
+        print((rotation_values[0] > 1)) 
 
-        if rotation_values > 1:
+        if rotation_values[0] > 1:
             print("i am inside")
             ser.write('1'.encode())
             print("i am inside 2")
