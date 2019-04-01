@@ -65,16 +65,16 @@ def handle_rotation_data(handle, value_bytes):
 
         rotation_values = [float(x) for x in value_bytes.decode('utf-8').split(",")]
         find_or_create("Surf Wheel Rotation",
-                       PropertyType.THREE_DIMENSIONS).update_values(values)
+                       PropertyType.ONE_DIMENSION).update_values(values)
+
+        if rotation_values[0] > RECOMMENDED_NUM_ROTATION and not nudged:
+            ser.write('1')
+            time.sleep(300)
+            ser.write('0')
+            global nudged
+            nudged = True
     except:
         print("cant parse")
-
-    if rotation_values[0] > RECOMMENDED_NUM_ROTATION and not nudged:
-        ser.write('1')
-        time.sleep(300)
-        ser.write('0')
-        global nudged
-        nudged = True
 
 def discover_characteristic(device):
     """List characteristics of a device"""
