@@ -44,7 +44,7 @@ def handle_proximity_data(handle, value_bytes):
     value_bytes -- bytearray, the data returned in the notification
     """
     value_str = value_bytes.decode('utf-8')
-    print("Received data: %s (handle %d)" % value_str, handle))
+    print("Received data: %s (handle %d)" % (value_str, handle))
     proximity_value = float(value_str)
     find_or_create("Surf Wheel Proximity",
                    PropertyType.PROXIMITY).update_values([proximity_value])
