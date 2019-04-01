@@ -94,13 +94,13 @@ def keyboard_interrupt_handler(signal_num, frame):
     """Make sure we close our program properly"""
     print("Exiting...".format(signal_num))
     surf_wheel.unsubscribe(GATT_CHARACTERISTIC_PROXIMITY)
-    left_wheel.unsubscribe(GATT_CHARACTERISTIC_ROTATION)
+    surf_wheel.unsubscribe(GATT_CHARACTERISTIC_ROTATION)
     exit(0)
 
 
 # Instantiate a thing with its credential, then read its properties from the DCD Hub
-my_thing = Thing(thing_id=THING_ID, token=THING_TOKEN)
-my_thing.read()
+# my_thing = Thing(thing_id=THING_ID, token=THING_TOKEN)
+# my_thing.read()
 
 # Start a BLE adapter
 bleAdapter = pygatt.GATTToolBackend()
@@ -110,8 +110,8 @@ bleAdapter.start()
 surf_wheel = bleAdapter.connect(BLUETOOTH_DEVICE_MAC, address_type=ADDRESS_TYPE)
 
 # Subscribe to the GATT service
-surf_wheel.subscribe(GATT_CHARACTERISTIC_PROXIMITY,
-                     callback=handle_proximity_data)
+# surf_wheel.subscribe(GATT_CHARACTERISTIC_PROXIMITY,
+#                      callback=handle_proximity_data)
 
 surf_wheel.subscribe(GATT_CHARACTERISTIC_ROTATION,
                      callback=handle_rotation_data)
