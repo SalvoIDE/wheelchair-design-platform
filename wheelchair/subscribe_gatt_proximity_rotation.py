@@ -83,7 +83,7 @@ def handle_rotation_data(handle, value_bytes):
         rotation_values = [float(value_str)]
         print(rotation_values)
 
-        find_or_create("surf-wheel-rotation-df50",
+        find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values(rotation_values)
 
         print("findorcreate")
