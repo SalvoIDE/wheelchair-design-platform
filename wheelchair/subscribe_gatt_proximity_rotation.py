@@ -43,10 +43,11 @@ def handle_proximity_data(handle, value_bytes):
     handle -- integer, characteristic read handle the data was received on
     value_bytes -- bytearray, the data returned in the notification
     """
-    print("Received data: %s (handle %d)" % (str(value_bytes), handle))
-    proximity_values = [float(x) for x in value_bytes.decode('utf-8')]
+    value_str = value_bytes.decode('utf-8')
+    print("Received data: %s (handle %d)" % value_str, handle))
+    proximity_value = float(value_str)
     find_or_create("Surf Wheel Proximity",
-                   PropertyType.PROXIMITY).update_values(values)
+                   PropertyType.PROXIMITY).update_values([proximity_value])
     if proximity_values[0] > USER_STATUS_BEHIND and not nudged:
         ser.write('1')
         time.sleep(2)
@@ -113,8 +114,8 @@ bleAdapter.start()
 surf_wheel = bleAdapter.connect(BLUETOOTH_DEVICE_MAC, address_type=ADDRESS_TYPE)
 
 # Subscribe to the GATT service
-# surf_wheel.subscribe(GATT_CHARACTERISTIC_PROXIMITY,
-#                      callback=handle_proximity_data)
+surf_wheel.subscribe(GATT_CHARACTERISTIC_PROXIMITY,
+                     callback=handle_proximity_data)
 
 surf_wheel.subscribe(GATT_CHARACTERISTIC_ROTATION,
                      callback=handle_rotation_data)
