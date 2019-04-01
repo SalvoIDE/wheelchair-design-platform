@@ -63,7 +63,7 @@ def handle_rotation_data(handle, value_bytes):
 
     try:
 
-        rotation_values = [float(x) for x in value_bytes.decode('utf-8').split(",")]
+        rotation_values = float(value_bytes.decode('utf-8'))
         find_or_create("Surf Wheel Rotation",
                        PropertyType.ONE_DIMENSION).update_values(values)
 
