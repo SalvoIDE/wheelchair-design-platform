@@ -7,6 +7,7 @@ import os  # To access environment variables
 from dotenv import load_dotenv  # To load the environment variables from the .env file
 import serial                   # To connect via the serial port
 import time
+import timeit
 
 # DCD Hub
 from dcd.entities.thing import Thing
@@ -26,9 +27,13 @@ GATT_CHARACTERISTIC_ROTATION= "06118733-4455-6677-8899-AABBCCDDEEFF"
 # Many devices, e.g. Fitbit, use random addressing, this is required to connect.
 ADDRESS_TYPE = pygatt.BLEAddressType.random
 # Recommended number of rotation
-# RECOMMENDED_NUM_ROTATION = 1
 # Did we already nudged
+
+RECOMMENDED_NUM_ROTATION = 3
 nudged = False
+someonebehind = False
+tired = False
+
 
 # Start reading the serial port
 ser = serial.Serial(
@@ -58,15 +63,29 @@ def handle_proximity_data(handle, value_bytes):
 
     try:
         print("Received data: %s (handle %d)" % (value_str, handle))
-        proximity_values = [float(value_str)]
+        global proximity_values = [float(value_str)]
         find_or_create("Surf Wheel Proximity",
                        PropertyType.PROXIMITY).update_values(proximity_values)
+
         if proximity_values[0] > 440:
+            someonebehind = True
+
+        if someonebehind:
+            if rotation_values[0] > RECOMMENDED_NUM_ROTATION:
+                tired = True
+                RECOMMENDED_NUM_ROTATION =  rotation_values + RECOMMENDED_NUM_ROTATION
+            else:
+                tired = False
+
+        if tired:
             ser.write('1'.encode())
-            time.sleep(8)
-            ser.write('0'.encode())
+            print("User is tired - 1 sent")
             global nudged
             nudged = True
+        else:
+            ser.write('0'.encode())
+            print("User is not tired - 0 sent")
+
     except:
         print("cant parse " + str(value_bytes))
 
@@ -80,33 +99,29 @@ def handle_rotation_data(handle, value_bytes):
     print("Received data: %s (handle %d)" % (value_str, handle))
 
     try:
-        rotation_values = [float(value_str)]
+        global rotation_values = [float(value_str)]
         print(rotation_values)
 
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values(rotation_values)
 
-        print("findorcreate")
+        if rotation_values[0] > RECOMMENDED_NUM_ROTATION:
+            if proximity_values[0] < 400:
+                tired = True
+                RECOMMENDED_NUM_ROTATION =  rotation_values + RECOMMENDED_NUM_ROTATION
+            else:
+                tired = False
 
-        # while rotation_values > RECOMMENDED_NUM_ROTATION:
-        #     ser.write('1')
-        #     time.sleep(3)
-        #     RECOMMENDED_NUM_ROTATION = RECOMMENDED_NUM_ROTATION + rotation_vlues
-	
-        print("My condition: ")
-        print((rotation_values[0] > 1)) 
-
-        if rotation_values[0] > 1:
-            print("i am inside")
+        if tired:
             ser.write('1'.encode())
-            print("i am inside 2")
-            time.sleep(3)
-            print("in am inside 3")
-            ser.write('0'.encode())
-            print("before global")
+            print("User is tired - 1 sent")
             global nudged
-            print("after global")
             nudged = True
+            # timer=15
+        else:
+            ser.write('0'.encode())
+            print("User is not tired - 0 sent")
+
     except:
         print("cant parse")
 
@@ -150,5 +165,9 @@ surf_wheel.subscribe(GATT_CHARACTERISTIC_PROXIMITY,
 surf_wheel.subscribe(GATT_CHARACTERISTIC_ROTATION,
                      callback=handle_rotation_data)
 
+
+while(True):
+    sleep(10)
+    print("im running")
 # Register our Keyboard handler to exit
 signal.signal(signal.SIGINT, keyboard_interrupt_handler)
