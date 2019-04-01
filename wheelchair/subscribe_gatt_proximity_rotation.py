@@ -28,6 +28,12 @@ ADDRESS_TYPE = pygatt.BLEAddressType.random
 # Did we already nudged
 nudged = False
 
+# Start reading the serial port
+ser = serial.Serial(
+    port = os.environ['SERIAL'],
+    baudrate = 9600,
+    timeout = 2)
+
 # USER_STATUS_BEHIND = 600
 
 def find_or_create(property_name, property_type):
