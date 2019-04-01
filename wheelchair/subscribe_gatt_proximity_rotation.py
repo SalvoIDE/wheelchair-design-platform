@@ -65,8 +65,10 @@ def handle_rotation_data(handle, value_bytes):
     try:
 
         rotation_values = float(value_str)
+        print(rotation_values)
+
         find_or_create("Surf Wheel Rotation",
-                       PropertyType.ONE_DIMENSION).update_values(values)
+                       PropertyType.ONE_DIMENSION).update_values([rotation_values])
 
         if rotation_values[0] > RECOMMENDED_NUM_ROTATION and not nudged:
             ser.write('1')
