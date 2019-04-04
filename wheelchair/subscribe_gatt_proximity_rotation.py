@@ -77,19 +77,19 @@ def handle_proximity_data(handle, value_bytes):
                        PropertyType.PROXIMITY).update_values([proximity_value])
 
         # print(proximity_value)
-        print("Proximity Success - checking tiredness")
+        print("Proximity Success")
         # run our code below that checks if user is tired
         check_tiredness()
 
     except:
-        print("cant parse proximity" + str(value_bytes))
+        print("Can't Parse Proximity")
 
 def handle_rotation_data(handle, value_bytes):
     """
     handle -- integer, characteristic read handle the data was received on
     value_bytes -- bytearray, the data returned in the notification
     """
-
+    # decode data received from orientation sensor into rotation value
     rot_value_str = value_bytes.decode('utf-8')
     print("Received rotation data: %s (handle %d)" % (rot_value_str, handle))
 
@@ -101,11 +101,11 @@ def handle_rotation_data(handle, value_bytes):
         # print(total_rotation_value)
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
-        print("Proximity Success - checking tiredness")
+        print("Rotation Success")
         check_tiredness()
 
     except:
-        print("cant parse rotation")
+        print("Can't parse - Rotation")
 
 def check_tiredness():
     if proximity_value is None or rotation_value is None:
