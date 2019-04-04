@@ -31,13 +31,12 @@ ADDRESS_TYPE = pygatt.BLEAddressType.random
 
 RECOMMENDED_NUM_ROTATION = 3
 nudged = False
-nobodybehind = False
+# nobodybehind = False
 tired = False
-
 proximity_value = None
+total_rotation_value = None
 rotation_value = 0
 reseted_value = 0
-rotation_being_pushed = 0
 dif_prev_rotation = 0
 
 # Start reading the serial port
@@ -62,71 +61,78 @@ def handle_proximity_data(handle, value_bytes):
     value_bytes -- bytearray, the data returned in the notification
     """
 
-    print(str(value_bytes))
-    value_str = value_bytes.decode('utf-8')
-    print(value_str)
+    # print(str(value_bytes))
+    # decode data into a value that we can interpret for proximity
+    # this value_str is a local variable
+    prox_value_str = value_bytes.decode('utf-8')
+    print("Received proximity data: %s (handle %d)" % (prox_value_str, handle))
 
     try:
-        print("Received data: %s (handle %d)" % (value_str, handle))
+        # print this value again as proximity data and handle
         global proximity_value
-        proximity_value = float(value_str)
+        # create a variable with the local variable data of proximity given as value_str
+        proximity_value = float(prox_value_str)
+        # find the characteristic in the hub of this type, if it's not there, create it for us
         find_or_create("Surf Wheel Proximity",
                        PropertyType.PROXIMITY).update_values([proximity_value])
+
+        # print(proximity_value)
+        print("Proximity Success - checking tiredness")
+        # run our code below that checks if user is tired
         check_tiredness()
 
     except:
-        print("cant parse " + str(value_bytes))
+        print("cant parse proximity" + str(value_bytes))
 
 def handle_rotation_data(handle, value_bytes):
     """
     handle -- integer, characteristic read handle the data was received on
     value_bytes -- bytearray, the data returned in the notification
     """
-    value_str = value_bytes.decode('utf-8')
-    print("Received data: %s (handle %d)" % (value_str, handle))
+
+    rot_value_str = value_bytes.decode('utf-8')
+    print("Received rotation data: %s (handle %d)" % (rot_value_str, handle))
 
     try:
-        total_rotation_value = float(value_str)
-
-        global rotation_value, dif_prev_rotation
+        global rotation_value, dif_prev_rotation, total_rotation_value
+        total_rotation_value = float(rot_value_str)
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
-        print(rotation_value)
-
+        # print(total_rotation_value)
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
-
+        print("Proximity Success - checking tiredness")
         check_tiredness()
-    #
-    # else:
-    #     ser.write('0'.encode())
-    #     print("User is not tired - 0 sent")
 
     except:
-        print("cant parse")
+        print("cant parse rotation")
 
 def check_tiredness():
     if proximity_value is None or rotation_value is None:
         return
 
+    print("Checking tiredness!")
+
     # if nobody is behind
     if proximity_value < 440:
-        nobodybehind = True
+        # nobodybehind = True
+        print("Nobody behind, user self pushing")
         reseted_value += dif_prev_rotation
 
     # if someone is pushing them
     else:
-        nobodybehind = False
+        # nobodybehind = False
         reseted_value = 0
+        print("User being pushed, reset rotations")
         tired = False
-
-
 
     # above recommendation and self propelled
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         tired = True
+        print("Tired - True")
     else:
         tired = False
+        print ("Tired - False")
 
 
     if tired and not nudged:
