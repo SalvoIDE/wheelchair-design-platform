@@ -98,7 +98,7 @@ def handle_rotation_data(handle, value_bytes):
 
         check_tiredness()
 
-        else:
+    else:
             ser.write('0'.encode())
             print("User is not tired - 0 sent")
 
