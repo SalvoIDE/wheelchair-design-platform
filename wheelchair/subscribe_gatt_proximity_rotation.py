@@ -136,7 +136,8 @@ def check_tiredness():
         print ("Tired - False")
 
 
-    if tired and not nudged:
+    # if tired and not nudged:
+    if tired:
         ser.write('1'.encode())
         print("User is tired - 1 sent")
         global nudged
