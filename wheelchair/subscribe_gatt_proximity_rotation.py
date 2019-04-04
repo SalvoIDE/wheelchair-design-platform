@@ -114,6 +114,8 @@ def check_tiredness():
     if proximity_value < 440:
         nobodybehind = True
         rotation_being_pushed += dif_prev_rotation
+        print("Current rotations " rotation_being_pushed)
+
     else:
         nobodybehind = False
 
@@ -126,7 +128,7 @@ def check_tiredness():
         print("User is tired - 1 sent")
         global nudged
         nudged = True
-        
+
     else:
         ser.write('0'.encode())
         print("User is not tired - 0 sent")
