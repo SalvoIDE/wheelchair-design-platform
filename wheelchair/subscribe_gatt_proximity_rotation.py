@@ -31,9 +31,14 @@ ADDRESS_TYPE = pygatt.BLEAddressType.random
 
 RECOMMENDED_NUM_ROTATION = 3
 nudged = False
-someonebehind = False
+nobodybehind = False
 tired = False
 
+proximity_value = None
+rotation_value = 0
+
+rotation_being_pushed = 0
+dif_prev_rotation = 0
 
 # Start reading the serial port
 ser = serial.Serial(
@@ -63,28 +68,11 @@ def handle_proximity_data(handle, value_bytes):
 
     try:
         print("Received data: %s (handle %d)" % (value_str, handle))
-        global proximity_values = [float(value_str)]
+        global proximity_value
+        proximity_value = float(value_str)
         find_or_create("Surf Wheel Proximity",
-                       PropertyType.PROXIMITY).update_values(proximity_values)
-
-        if proximity_values[0] > 440:
-            someonebehind = True
-
-        if someonebehind:
-            if rotation_values[0] > RECOMMENDED_NUM_ROTATION:
-                tired = True
-                RECOMMENDED_NUM_ROTATION =  rotation_values + RECOMMENDED_NUM_ROTATION
-            else:
-                tired = False
-
-        if tired:
-            ser.write('1'.encode())
-            print("User is tired - 1 sent")
-            global nudged
-            nudged = True
-        else:
-            ser.write('0'.encode())
-            print("User is not tired - 0 sent")
+                       PropertyType.PROXIMITY).update_values([proximity_value])
+        check_tiredness()
 
     except:
         print("cant parse " + str(value_bytes))
@@ -94,36 +82,54 @@ def handle_rotation_data(handle, value_bytes):
     handle -- integer, characteristic read handle the data was received on
     value_bytes -- bytearray, the data returned in the notification
     """
-    RECOMMENDED_NUM_ROTATION = 1
     value_str = value_bytes.decode('utf-8')
     print("Received data: %s (handle %d)" % (value_str, handle))
 
     try:
-        global rotation_values = [float(value_str)]
-        print(rotation_values)
+        new_rotation_value = float(value_str)
+
+        global rotation_value, dif_prev_rotation
+        dif_prev_rotation = new_rotation_value - rotation_value
+        rotation_value = new_rotation_value
+        print(rotation_value)
 
         find_or_create("surf-wheel-rotation",
-                       PropertyType.ONE_DIMENSION).update_values(rotation_values)
+                       PropertyType.ONE_DIMENSION).update_values([rotation_value])
 
-        if rotation_values[0] > RECOMMENDED_NUM_ROTATION:
-            if proximity_values[0] < 400:
-                tired = True
-                RECOMMENDED_NUM_ROTATION =  rotation_values + RECOMMENDED_NUM_ROTATION
-            else:
-                tired = False
+        check_tiredness()
 
-        if tired:
-            ser.write('1'.encode())
-            print("User is tired - 1 sent")
-            global nudged
-            nudged = True
-            # timer=15
         else:
             ser.write('0'.encode())
             print("User is not tired - 0 sent")
 
     except:
         print("cant parse")
+
+def check_tiredness():
+    if proximity_value is None or rotation_value is None:
+        return
+
+    # when someone is pushing the number of max rotations should be reset
+    # so that when they leave the threshold is higher
+    if proximity_value < 440:
+        nobodybehind = True
+        rotation_being_pushed += dif_prev_rotation
+    else:
+        nobodybehind = False
+
+    # above recommendation and self propelled
+    if rotation_value-rotation_being_pushed > RECOMMENDED_NUM_ROTATION:
+        tired = True
+
+    if tired and not nudged:
+        ser.write('1'.encode())
+        print("User is tired - 1 sent")
+        global nudged
+        nudged = True
+    else:
+        ser.write('0'.encode())
+        print("User is not tired - 0 sent")
+
 
 def discover_characteristic(device):
     """List characteristics of a device"""
@@ -166,8 +172,5 @@ surf_wheel.subscribe(GATT_CHARACTERISTIC_ROTATION,
                      callback=handle_rotation_data)
 
 
-while(True):
-    sleep(10)
-    print("im running")
 # Register our Keyboard handler to exit
 signal.signal(signal.SIGINT, keyboard_interrupt_handler)
