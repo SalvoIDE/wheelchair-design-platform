@@ -133,7 +133,6 @@ def check_tiredness():
         tired = True
         print("Tired - True")
     else:
-        tired = False
         print ("Tired - False")
 
 
