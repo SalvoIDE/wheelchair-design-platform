@@ -101,8 +101,9 @@ def handle_rotation_data(handle, value_bytes):
         # print(total_rotation_value)
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
-        print("Rotation Success")
+        print("Rotation Success 1")
         check_tiredness()
+        print("Rotation Success 2")
 
     except:
         print("Can't parse - Rotation")
