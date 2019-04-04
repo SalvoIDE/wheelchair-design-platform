@@ -36,7 +36,7 @@ tired = False
 
 proximity_value = None
 rotation_value = 0
-reseted_value = 0
+
 rotation_being_pushed = 0
 dif_prev_rotation = 0
 
@@ -106,25 +106,25 @@ def handle_rotation_data(handle, value_bytes):
         print("cant parse")
 
 def check_tiredness():
-    if proximity_value is None or reseted_value is None:
+    if proximity_value is None or rotation_value is None:
         return
 
-    # if nobody is behind
+    # when someone is pushing the number of max rotations should be reset
+    # so that when they leave the threshold is higher
     if proximity_value < 440:
         nobodybehind = True
-        reseted_value += dif_prev_rotation
-        # if someone is pushing them
+
     else:
         nobodybehind = False
-        tired = False
-        reseted_value = 0
+        rotation_being_pushed += dif_prev_rotation
 
     # above recommendation and self propelled
-    if reseted_value > RECOMMENDED_NUM_ROTATION:
+    if rotation_value-rotation_being_pushed > RECOMMENDED_NUM_ROTATION:
         tired = True
 
+    # if tired and not nudged:
 
-    if tired and not nudged:
+    if tired:
         ser.write('1'.encode())
         print("User is tired - 1 sent")
         global nudged
@@ -133,7 +133,7 @@ def check_tiredness():
     else:
         ser.write('0'.encode())
         print("User is not tired - 0 sent")
-        nudged = False
+
 
 def discover_characteristic(device):
     """List characteristics of a device"""
