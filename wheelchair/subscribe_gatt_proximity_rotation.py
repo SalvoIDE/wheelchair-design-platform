@@ -124,7 +124,9 @@ def check_tiredness():
     # if rotation_value-rotation_being_pushed > RECOMMENDED_NUM_ROTATION:
         tired = True
 
-    if tired and not nudged:
+    # if tired and not nudged:
+
+    if tired:
         ser.write('1'.encode())
         print("User is tired - 1 sent")
         global nudged
