@@ -97,10 +97,10 @@ def handle_rotation_data(handle, value_bytes):
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
 
         check_tiredness()
-
-    else:
-        ser.write('0'.encode())
-        print("User is not tired - 0 sent")
+    #
+    # else:
+    #     ser.write('0'.encode())
+    #     print("User is not tired - 0 sent")
 
     except:
         print("cant parse")
@@ -126,6 +126,7 @@ def check_tiredness():
         print("User is tired - 1 sent")
         global nudged
         nudged = True
+        
     else:
         ser.write('0'.encode())
         print("User is not tired - 0 sent")
