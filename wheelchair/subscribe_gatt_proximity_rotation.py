@@ -77,9 +77,10 @@ def handle_proximity_data(handle, value_bytes):
                        PropertyType.PROXIMITY).update_values([proximity_value])
 
         # print(proximity_value)
-        print("Proximity Success")
+        print("Proximity Success 1")
         # run our code below that checks if user is tired
-        check_tiredness()
+        # check_tiredness()
+        # print("Proximity Success 1")
 
     except:
         print("Can't Parse Proximity")
@@ -102,8 +103,8 @@ def handle_rotation_data(handle, value_bytes):
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
-        check_tiredness()
-        print("Rotation Success 2")
+        # check_tiredness()
+        # print("Rotation Success 2")
 
     except:
         print("Can't parse - Rotation")
