@@ -114,13 +114,14 @@ def check_tiredness():
     if proximity_value < 440:
         nobodybehind = True
         rotation_being_pushed += dif_prev_rotation
-        print("Current rotations " rotation_being_pushed)
+        print("Current rotations ")
 
     else:
         nobodybehind = False
 
     # above recommendation and self propelled
-    if rotation_value-rotation_being_pushed > RECOMMENDED_NUM_ROTATION:
+    if rotation_value > RECOMMENDED_NUM_ROTATION:
+    # if rotation_value-rotation_being_pushed > RECOMMENDED_NUM_ROTATION:
         tired = True
 
     if tired and not nudged:
