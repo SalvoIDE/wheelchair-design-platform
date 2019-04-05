@@ -121,14 +121,13 @@ def check_tiredness():
 
     # if nobody is behind
     if proximity_value < 300:
-        # nobodybehind = True
+        nobodybehind = True
         print("Nobody behind, user self pushing")
         # reseted_value += dif_prev_rotation
         ser.write('1'.encode())
         #delete this after
-
     # if someone is pushing them
-    else if proximity_value > 300:
+    else:
         # nobodybehind = False
         # reseted_value = 0
         print("User being pushed, reset rotations")
