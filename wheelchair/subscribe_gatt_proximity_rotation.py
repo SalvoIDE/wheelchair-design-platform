@@ -127,26 +127,31 @@ def check_tiredness():
         reseted_value = 0
         print("User being pushed, reset rotations")
         tired = False
+        ser.write('0'encode())
+
 
     # above recommendation and self propelled
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         tired = True
-        print("Tired - True")
+        print("Tired - True - 1 sent")
+        ser.write('1'encode())
     else:
-        print ("Tired - False")
+        print ("Tired - False - 0 Sent")
+        ser.write('0'encode())
+        nudged = False
 
 
     # if tired and not nudged:
-    if tired:
-        ser.write('1'.encode())
-        print("User is tired - 1 sent")
-        global nudged
-        nudged = True
+    # if tired:
+    #     ser.write('1'.encode())
+    #     print("User is tired - 1 sent")
+    #     global nudged
+    #     nudged = True
 
-    else:
-        ser.write('0'.encode())
-        print("User is not tired - 0 sent")
-        nudged = False
+    # else:
+    #     ser.write('0'.encode())
+    #     print("User is not tired - 0 sent")
+    #     nudged = False
 
 
 def discover_characteristic(device):
