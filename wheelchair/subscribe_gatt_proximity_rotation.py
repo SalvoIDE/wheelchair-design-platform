@@ -126,8 +126,8 @@ def check_tiredness():
         print("Nobody behind, user self pushing")
         # reseted_value += dif_prev_rotation
         ser.write('0'.encode())
-        global nudged
-        nudged = True
+        # global nudged
+        # nudged = True
         #delete this after
     # if someone is pushing them
     else:
