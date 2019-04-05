@@ -153,6 +153,9 @@ def check_tiredness():
         # tired = True
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
+        time.sleep(10)
+        ser.write('0'.encode())
+        reseted_value = 0
     else:
         print ("Tired - False - 0 Sent")
         ser.write('0'.encode())
