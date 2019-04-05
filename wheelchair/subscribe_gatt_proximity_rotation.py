@@ -62,16 +62,19 @@ def find_or_create(property_name, property_type):
 # and update the property values
 def serial_proximity_values():
     # Read one line
+    find_or_create("surf-wheel-proximity",
+                   PropertyType.ONE_DIMENSION).update_values([proximity_value])
     global proximity_value
     line_bytes = ser.readline()
     # If the line is not empty
     if len(line_bytes) > 0:
         # Convert the bytes into string
-        prox_line = line_bytes.decode('utf-8')
-        # Split the string using commas as separator, we get a list of strings
-        proximity_value = line.split(',')
+        proximity_value = line_bytes.decode('utf-8')
+        # # Split the string using commas as separator, we get a list of strings
+        # proximity_value = line.split(',')
         # Use the first element of the list as property id
         property_id = values.pop(0)
+
         # Get the property from the thing
         prop = my_thing.properties[property_id]
         # If we find the property, we update the values (rest of the list)
