@@ -81,7 +81,7 @@ def serial_proximity_values():
         else:
             print('Warning: unknown property ' + property_id)
 
-        check_tiredness()
+    check_tiredness()
 
 
 # def handle_proximity_data(handle, value_bytes):
