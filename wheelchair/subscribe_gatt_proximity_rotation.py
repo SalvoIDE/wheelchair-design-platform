@@ -119,45 +119,43 @@ def handle_rotation_data(handle, value_bytes):
 def check_tiredness():
     global proximity_value
     global rotation_value
-
+    global total_rotation_value
+    global reseted_value
     # if proximity_value is None or rotation_value is None:
     #     return
 
     print("Checking tiredness!")
 
     # if nobody is behind
-    if proximity_value < 300:
-        # nobodybehind = True
-        print("Nobody behind, user self pushing")
-        # reseted_value += dif_prev_rotation
-        ser.write('1'.encode())
-        break
-        # global nudged
+    # if proximity_value < 300:
+    #     # nobodybehind = True
+    #     print("Nobody behind, user self pushing")
+    reseted_value += dif_prev_rotation
+    #     ser.write('1'.encode())
+    #     break
+    #     # global nudged
         # nudged = True
         #delete this after
     # if someone is pushing them
-
-    else:
-        # nobodybehind = False
-        ser.write('0'.encode())
-        # reseted_value = 0
-        print("User being pushed, reset rotations")
-        # tired = False
-        break
-        # nudged = False
-
-
-    # above recommendation and self propelled
-    # if reseted_value > RECOMMENDED_NUM_ROTATION:
-    #     # tired = True
-    #     print("Tired - True - 1 sent")
-    #     ser.write('1'.encode())
     # else:
-    #     print ("Tired - False - 0 Sent")
+    #     # nobodybehind = False
     #     ser.write('0'.encode())
+    #     reseted_value = 0
+    #     print("User being pushed, reset rotations")
+    #     # tired = False
+    #     break
         # nudged = False
-
-
+    #
+    # # above recommendation and self propelled
+    if reseted_value > RECOMMENDED_NUM_ROTATION:
+        # tired = True
+        print("Tired - True - 1 sent")
+        ser.write('1'.encode())
+    else:
+        print ("Tired - False - 0 Sent")
+        ser.write('0'.encode())
+        # nudged = False
+    # #
     # if tired and not nudged:
     # if tired:
     #     ser.write('1'.encode())
@@ -165,10 +163,10 @@ def check_tiredness():
     #     global nudged
     #     nudged = True
 
-    # else:
-    #     ser.write('0'.encode())
-    #     print("User is not tired - 0 sent")
-    #     nudged = False
+    else:
+        ser.write('0'.encode())
+        print("User is not tired - 0 sent")
+        nudged = False
 
 
 def discover_characteristic(device):
