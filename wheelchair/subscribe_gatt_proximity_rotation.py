@@ -121,7 +121,7 @@ def check_tiredness():
     print("Checking tiredness!")
 
     # if nobody is behind
-    if proximity_value < 300 and not nudged:
+    if proximity_value < 300:
         # nobodybehind = True
         print("Nobody behind, user self pushing")
         # reseted_value += dif_prev_rotation
@@ -136,7 +136,7 @@ def check_tiredness():
         print("User being pushed, reset rotations")
         # tired = False
         ser.write('1'.encode())
-        nudged = False
+        # nudged = False
 
 
     # above recommendation and self propelled
