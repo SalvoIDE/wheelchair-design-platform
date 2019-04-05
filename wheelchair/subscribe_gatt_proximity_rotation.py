@@ -127,7 +127,7 @@ def check_tiredness():
         reseted_value = 0
         print("User being pushed, reset rotations")
         tired = False
-        ser.write('0'.encode())
+        # ser.write('0'.encode())
 
 
     # above recommendation and self propelled
