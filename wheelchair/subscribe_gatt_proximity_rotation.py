@@ -118,7 +118,7 @@ def check_tiredness():
     print("Checking tiredness!")
 
     # if nobody is behind
-    if proximity_value < 440:
+    while proximity_value < 370:
         # nobodybehind = True
         print("Nobody behind, user self pushing")
         # reseted_value += dif_prev_rotation
