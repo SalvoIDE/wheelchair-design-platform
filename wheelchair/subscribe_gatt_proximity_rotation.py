@@ -72,7 +72,7 @@ def serial_proximity_values():
         prox_values = line.split(',')
         # Use the first element of the list as property id
         property_id = values.pop(0)
-        print(proximity_line)
+        print(proximity_value)
         # Get the property from the thing
         prop = my_thing.properties[property_id]
         # If we find the property, we update the values (rest of the list)
