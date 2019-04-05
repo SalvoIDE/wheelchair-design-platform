@@ -11,8 +11,8 @@
 #define LED_PIN 2
 #define VIB_PIN 4
 #define PROX_PIN A0
-int prox_value = - 10000;       
-//int property_id;
+int proximity_value = - 10000;       
+char property_id = "surf-wheel-proximity-b6f1";
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS      10
@@ -93,11 +93,12 @@ void setup() {
   }
 
 void loop() {
-  prox_value = analogRead(PROX_PIN);
-//  Serial.print(property_id);
-//  Serial.print(",");
-  Serial.print(prox_value);
+  proximity_value = analogRead(PROX_PIN);
+  Serial.print("surf-wheel-proximity-b6f1");
   Serial.print(",");
+  Serial.print(proximity_value);
+  Serial.print(",");
+//  Serial.println("");
 char command = Serial.read();
   if (command == '1') {
     tired = true;

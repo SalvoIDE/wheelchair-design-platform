@@ -88,8 +88,9 @@ def serial_proximity_values():
         reseted_value = 0
         print("someone behind - 0 sent)")
     else:
-        # check_tiredness()
+        check_tiredness()
         ser.write('1'.encode)
+
 
 
 # def handle_proximity_data(handle, value_bytes):
@@ -151,6 +152,7 @@ def handle_rotation_data(handle, value_bytes):
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
         # check_tiredness()
+        serial_to_property_values()
 
     except:
         print("Can't parse - Rotation")
