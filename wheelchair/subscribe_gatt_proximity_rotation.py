@@ -67,7 +67,7 @@ def serial_proximity_values():
     # If the line is not empty
     if len(line_bytes) > 0:
         # Convert the bytes into string
-        proximity_line = line_bytes.decode('utf-8')
+        proximity_value = line_bytes.decode('utf-8')
         # # Split the string using commas as separator, we get a list of strings
         prox_values = line.split(',')
         # Use the first element of the list as property id
