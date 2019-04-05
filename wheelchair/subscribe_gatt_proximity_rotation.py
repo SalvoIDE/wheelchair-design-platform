@@ -87,8 +87,8 @@ def handle_proximity_data(handle, value_bytes):
         # # check_tiredness()
         # # print("Proximity Success 1")
 
-    # except:
-    #     print("Can't Parse Proximity")
+    except:
+        print("Can't Parse Proximity")
 
 def handle_rotation_data(handle, value_bytes):
     """
@@ -115,7 +115,6 @@ def handle_rotation_data(handle, value_bytes):
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
         check_tiredness()
-        # print("Rotation Success 2")
 
     except:
         print("Can't parse - Rotation")
