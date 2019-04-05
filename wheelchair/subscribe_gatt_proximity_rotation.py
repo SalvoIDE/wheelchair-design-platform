@@ -58,38 +58,6 @@ def find_or_create(property_name, property_type):
     return my_thing.find_property_by_name(property_name)
 
 
-# Read the next line from the serial port
-# and update the property values
-def serial_proximity_values():
-    # Read one line
-    global proximity_value
-    line_bytes = ser.readline()
-    # If the line is not empty
-    if len(line_bytes) > 0:
-        # Convert the bytes into string
-        proximity_value = line_bytes.decode('utf-8')
-        # # Split the string using commas as separator, we get a list of strings
-        prox_values = line.split(',')
-        # Use the first element of the list as property id
-        property_id = values.pop(0)
-        print(proximity_value)
-        # Get the property from the thing
-        prop = my_thing.properties[property_id]
-        # If we find the property, we update the values (rest of the list)
-        if prop is not None:
-            prop.update_values([float(x) for x in prox_values])
-        # Otherwise, we show a warning
-        else:
-            print('Warning: unknown property ' + property_id)
-    # 
-    # if proximity_value > 260:
-    #     ser.write('0'.encode)
-    #     global reseted_value
-    #     reseted_value = 0
-    #     print("someone behind - 0 sent)")
-    # else:
-    #     check_tiredness()
-    #     # ser.write('1'.encode)
 
 
 # def handle_proximity_data(handle, value_bytes):
@@ -155,6 +123,40 @@ def handle_rotation_data(handle, value_bytes):
 
     except:
         print("Can't parse - Rotation")
+
+
+# Read the next line from the serial port
+# and update the property values
+def serial_proximity_values():
+    # Read one line
+    global proximity_value
+    line_bytes = ser.readline()
+    # If the line is not empty
+    if len(line_bytes) > 0:
+        # Convert the bytes into string
+        proximity_value = line_bytes.decode('utf-8')
+        # # Split the string using commas as separator, we get a list of strings
+        prox_values = line.split(',')
+        # Use the first element of the list as property id
+        property_id = values.pop(0)
+        print(proximity_value)
+        # Get the property from the thing
+        prop = my_thing.properties[property_id]
+        # If we find the property, we update the values (rest of the list)
+        if prop is not None:
+            prop.update_values([float(x) for x in prox_values])
+        # Otherwise, we show a warning
+        else:
+            print('Warning: unknown property ' + property_id)
+    #
+    # if proximity_value > 260:
+    #     ser.write('0'.encode)
+    #     global reseted_value
+    #     reseted_value = 0
+    #     print("someone behind - 0 sent)")
+    # else:
+    #     check_tiredness()
+    #     # ser.write('1'.encode)
 
 def check_tiredness():
     global proximity_value
