@@ -128,7 +128,7 @@ def check_tiredness():
         #delete this after
 
     # if someone is pushing them
-else if proximity_value > 301:
+    else if proximity_value > 300:
         # nobodybehind = False
         # reseted_value = 0
         print("User being pushed, reset rotations")
