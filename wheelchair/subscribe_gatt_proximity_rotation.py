@@ -120,25 +120,27 @@ def check_tiredness():
         # nobodybehind = True
         print("Nobody behind, user self pushing")
         reseted_value += dif_prev_rotation
+        ser.write('1'.encode())
+        #delete this after
 
     # if someone is pushing them
     else:
         # nobodybehind = False
         reseted_value = 0
         print("User being pushed, reset rotations")
-        tired = False
-        # ser.write('0'.encode())
-
-
-    # above recommendation and self propelled
-    if reseted_value > RECOMMENDED_NUM_ROTATION:
-        tired = True
-        print("Tired - True - 1 sent")
-        ser.write('1'.encode())
-    else:
-        print ("Tired - False - 0 Sent")
+        # tired = False
         ser.write('0'.encode())
-        nudged = False
+
+
+    # # above recommendation and self propelled
+    # if reseted_value > RECOMMENDED_NUM_ROTATION:
+    #     # tired = True
+    #     print("Tired - True - 1 sent")
+    #     ser.write('1'.encode())
+    # else:
+    #     print ("Tired - False - 0 Sent")
+    #     ser.write('0'.encode())
+    #     # nudged = False
 
 
     # if tired and not nudged:
