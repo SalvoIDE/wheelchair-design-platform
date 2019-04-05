@@ -115,8 +115,8 @@ def check_tiredness():
     global proximity_value
     global rotation_value
 
-    if proximity_value is None or rotation_value is None:
-        return
+    # if proximity_value is None or rotation_value is None:
+    #     return
 
     print("Checking tiredness!")
 
@@ -130,6 +130,7 @@ def check_tiredness():
         # nudged = True
         #delete this after
     # if someone is pushing them
+
     if proximity_value > 300:
         # nobodybehind = False
         # reseted_value = 0
