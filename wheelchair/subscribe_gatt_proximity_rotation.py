@@ -119,7 +119,7 @@ def handle_rotation_data(handle, value_bytes):
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
-        # check_tiredness()
+        check_tiredness()
         # serial_proximity_values()
 
     except:
