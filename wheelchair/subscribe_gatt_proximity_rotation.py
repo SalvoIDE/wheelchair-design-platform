@@ -120,7 +120,7 @@ def check_tiredness():
     print("Checking tiredness!")
 
     # if nobody is behind
-    if proximity_value < 375:
+    if proximity_value < 300:
         # nobodybehind = True
         print("Nobody behind, user self pushing")
         # reseted_value += dif_prev_rotation
