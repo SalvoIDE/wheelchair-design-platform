@@ -12,7 +12,7 @@
 #define VIB_PIN 4
 #define PROX_PIN A0
 int prox_value = - 10000;       
-
+//int property_id;
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS      10
@@ -65,16 +65,16 @@ void yellow_led() {
 //    for(int i=0;i<NUMPIXELS;i++){
     // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
     Serial.println("User tired - yellow light...");
-    pixels.setPixelColor(0, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(1, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(2, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(3, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(4, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(5, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(6, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(7, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(8, pixels.Color(200,100,0)); // Moderately bright green color.
-    pixels.setPixelColor(9, pixels.Color(200,100,0)); // Moderately bright green color.
+    pixels.setPixelColor(0, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(1, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(2, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(3, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(4, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(5, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(6, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(7, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(8, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(9, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.show(); // This sends the updated pixel color to the hardware.
 
 
@@ -94,8 +94,10 @@ void setup() {
 
 void loop() {
   prox_value = analogRead(PROX_PIN);
+//  Serial.print(property_id);
+//  Serial.print(",");
   Serial.print(prox_value);
-  Serial.println(",");
+  Serial.print(",");
 char command = Serial.read();
   if (command == '1') {
     tired = true;

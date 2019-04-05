@@ -84,10 +84,11 @@ def serial_proximity_values():
 
     if proximity_value < 260:
         ser.write('0'.encode)
+        global reseted_value
         reseted_value = 0
         print("someone behind - 0 sent)")
-
-    check_tiredness()
+    else:
+        check_tiredness()
 
 
 # def handle_proximity_data(handle, value_bytes):
@@ -142,14 +143,13 @@ def handle_rotation_data(handle, value_bytes):
         total_rotation_value = float(rot_value_str)
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
-        reseted_value += dif_prev_rotation
 
         print(total_rotation_value)
         print(reseted_value)
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
-        check_tiredness()
+        # check_tiredness()
 
     except:
         print("Can't parse - Rotation")
@@ -185,6 +185,7 @@ def check_tiredness():
     #
     # # above recommendation and self propelled
 
+    reseted_value += dif_prev_rotation
 
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         # tired = True
@@ -197,7 +198,7 @@ def check_tiredness():
         print ("Tired - False - 0 Sent")
         ser.write('0'.encode())
         # nudged = False
-    # #
+
     # if tired and not nudged:
     # if tired:
     #     ser.write('1'.encode())
