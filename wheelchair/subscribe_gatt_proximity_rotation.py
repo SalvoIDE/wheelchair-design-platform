@@ -181,7 +181,7 @@ def check_tiredness():
         # nudged = False
     #
     # # above recommendation and self propelled
-    if proximity_value < 260
+    if proximity_value < 260:
         ser.write('0'.encode)
         reseted_value = 0
         print("someone behind - 0 sent)")
