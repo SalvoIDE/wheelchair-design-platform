@@ -136,7 +136,7 @@ def check_tiredness():
         print("User being pushed, reset rotations")
         # tired = False
         ser.write('1'.encode())
-        nudge = False
+        nudged = False
 
 
     # above recommendation and self propelled
