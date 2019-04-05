@@ -10,6 +10,8 @@
 // On a Trinket or Gemma we suggest changing this to 1
 #define LED_PIN 2
 #define VIB_PIN 4
+#define PROX_PIN A0
+int prox_value = - 10000;       
 
 
 // How many NeoPixels are attached to the Arduino?
@@ -81,6 +83,7 @@ void yellow_led() {
 
 void setup() {
   pinMode(VIB_PIN, OUTPUT);
+  pinMode(PROX_PIN, INPUT);
   Serial.println("let's start this zoo journey");
   pixels.begin(); // This initializes the NeoPixel library.
   Serial.begin(9600);
@@ -90,6 +93,9 @@ void setup() {
   }
 
 void loop() {
+  prox_value = analogRead(PROX_PIN);
+  Serial.print(prox_value);
+  Serial.println(",");
 char command = Serial.read();
   if (command == '1') {
     tired = true;

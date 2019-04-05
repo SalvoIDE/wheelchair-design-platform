@@ -39,6 +39,11 @@ rotation_value = 0
 reseted_value = 0
 dif_prev_rotation = 0
 
+# We can read the details of our thing,
+# i.e. retrieving its information from the hub
+my_thing.read()
+
+
 # Start reading the serial port
 ser = serial.Serial(
     port = os.environ['SERIAL'],
@@ -55,40 +60,66 @@ def find_or_create(property_name, property_type):
     return my_thing.find_property_by_name(property_name)
 
 
-def handle_proximity_data(handle, value_bytes):
-    """
-    handle -- integer, characteristic read handle the data was received on
-    value_bytes -- bytearray, the data returned in the notification
-    """
+# Read the next line from the serial port
+# and update the property values
+def serial_proximity_values():
+    # Read one line
+    global proximity_value
+    line_bytes = ser.readline()
+    # If the line is not empty
+    if len(line_bytes) > 0:
+        # Convert the bytes into string
+        prox_line = line_bytes.decode('utf-8')
+        # Split the string using commas as separator, we get a list of strings
+        proximity_value = line.split(',')
+        # Use the first element of the list as property id
+        property_id = values.pop(0)
+        # Get the property from the thing
+        prop = my_thing.properties[property_id]
+        # If we find the property, we update the values (rest of the list)
+        if prop is not None:
+            prop.update_values([float(x) for x in prox_values])
+        # Otherwise, we show a warning
+        else:
+            print('Warning: unknown property ' + property_id)
 
-    # print(str(value_bytes))
-    # decode data into a value that we can interpret for proximity
-    # this value_str is a local variable
-    prox_value_str = value_bytes.decode('utf-8')
-    # print("Received proximity data: %s (handle %d)" % (prox_value_str, handle))
+        check_tiredness()
 
-    try:
-        # print this value again as proximity data and handle
-        global proximity_value
-        # create a variable with the local variable data of proximity given as value_str
-        proximity_value = float(prox_value_str)
-        # find the characteristic in the hub of this type, if it's not there, create it for us
-        find_or_create("Surf Wheel Proximity",
-                       PropertyType.PROXIMITY).update_values([proximity_value])
 
-        # print(proximity_value)
-        # print("Proximity Success 1")
-        # run our code below that checks if user is tired
-        # if proximity_value < 300:                # nobodybehind = True
-        #     print("Nobody behind, user self pushing")
-        #     # reseted_value += dif_prev_rotation
-        #     ser.write('1'.encode())
-        #     break
-        # # check_tiredness()
-        # # print("Proximity Success 1")
-
-    except:
-        print("Can't Parse Proximity")
+# def handle_proximity_data(handle, value_bytes):
+#     """
+#     handle -- integer, characteristic read handle the data was received on
+#     value_bytes -- bytearray, the data returned in the notification
+#     """
+#
+#     # print(str(value_bytes))
+#     # decode data into a value that we can interpret for proximity
+#     # this value_str is a local variable
+#     prox_value_str = value_bytes.decode('utf-8')
+#     # print("Received proximity data: %s (handle %d)" % (prox_value_str, handle))
+#
+#     try:
+#         # print this value again as proximity data and handle
+#         global proximity_value
+#         # create a variable with the local variable data of proximity given as value_str
+#         proximity_value = float(prox_value_str)
+#         # find the characteristic in the hub of this type, if it's not there, create it for us
+#         find_or_create("Surf Wheel Proximity",
+#                        PropertyType.PROXIMITY).update_values([proximity_value])
+#
+#         # print(proximity_value)
+#         # print("Proximity Success 1")
+#         # run our code below that checks if user is tired
+#         if proximity_value < 300:                # nobodybehind = True
+#             print("Nobody behind, user self pushing")
+#             # reseted_value += dif_prev_rotation
+#             ser.write('1'.encode())
+#             break
+# #         # # check_tiredness()
+#         # # print("Proximity Success 1")
+#
+#     except:
+#         print("Can't Parse Proximity")
 
 def handle_rotation_data(handle, value_bytes):
     """
