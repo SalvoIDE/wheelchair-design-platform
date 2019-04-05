@@ -161,13 +161,13 @@ def check_tiredness():
     #     ser.write('1'.encode())
     #     print("User is tired - 1 sent")
     #     global nudged
-    #     nudged = True
-
-    else:
-        ser.write('0'.encode())
-        print("User is not tired - 0 sent")
-        nudged = False
-
+    # #     nudged = True
+    #
+    # else:
+    #     ser.write('0'.encode())
+    #     print("User is not tired - 0 sent")
+    #     nudged = False
+    #
 
 def discover_characteristic(device):
     """List characteristics of a device"""
