@@ -125,7 +125,7 @@ def check_tiredness():
         # nobodybehind = True
         print("Nobody behind, user self pushing")
         # reseted_value += dif_prev_rotation
-        ser.write('0'.encode())
+        ser.write('1'.encode())
         # global nudged
         # nudged = True
         #delete this after
@@ -135,7 +135,7 @@ def check_tiredness():
         # reseted_value = 0
         print("User being pushed, reset rotations")
         # tired = False
-        ser.write('1'.encode())
+        ser.write('0'.encode())
         # nudged = False
 
 
