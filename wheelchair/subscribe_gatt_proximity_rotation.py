@@ -114,7 +114,6 @@ def handle_rotation_data(handle, value_bytes):
 def check_tiredness():
     global proximity_value
     global rotation_value
-    global nudged
 
     if proximity_value is None or rotation_value is None:
         return
@@ -127,6 +126,7 @@ def check_tiredness():
         print("Nobody behind, user self pushing")
         # reseted_value += dif_prev_rotation
         ser.write('0'.encode())
+        global nudged
         nudged = True
         #delete this after
     # if someone is pushing them
