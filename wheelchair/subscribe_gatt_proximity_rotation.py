@@ -119,8 +119,18 @@ def handle_rotation_data(handle, value_bytes):
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
-        check_tiredness()
+        # check_tiredness()
         # serial_proximity_values()
+        if reseted_value > RECOMMENDED_NUM_ROTATION:
+            # tired = True
+            print("Tired - True - 1 sent")
+            ser.write('1'.encode())
+            time.sleep(10)
+            # ser.write('0'.encode())
+            reseted_value = 0
+        else:
+            print ("Tired - False - 0 Sent")
+            ser.write('0'.encode())
 
     except:
         print("Can't parse - Rotation")
@@ -159,15 +169,15 @@ def handle_rotation_data(handle, value_bytes):
 #     #     check_tiredness()
 #     #     # ser.write('1'.encode)
 
-def check_tiredness():
-    global proximity_value
-    global rotation_value
-    global total_rotation_value
-    global reseted_value
-    # if proximity_value is None or rotation_value is None:
-    #     return
-
-    print("Checking tiredness!")
+# def check_tiredness():
+#     global proximity_value
+#     global rotation_value
+#     global total_rotation_value
+#     global reseted_value
+#     # if proximity_value is None or rotation_value is None:
+#     #     return
+#
+#     print("Checking tiredness!")
 
     # if nobody is behind
     # if proximity_value < 300:
@@ -191,16 +201,16 @@ def check_tiredness():
     # # above recommendation and self propelled
 
 
-    if reseted_value > RECOMMENDED_NUM_ROTATION:
-        # tired = True
-        print("Tired - True - 1 sent")
-        ser.write('1'.encode())
-        time.sleep(10)
-        ser.write('0'.encode())
-        reseted_value = 0
-    else:
-        print ("Tired - False - 0 Sent")
-        ser.write('0'.encode())
+    # if reseted_value > RECOMMENDED_NUM_ROTATION:
+    #     # tired = True
+    #     print("Tired - True - 1 sent")
+    #     ser.write('1'.encode())
+    #     time.sleep(10)
+    #     ser.write('0'.encode())
+    #     reseted_value = 0
+    # else:
+    #     print ("Tired - False - 0 Sent")
+    #     ser.write('0'.encode())
         # nudged = False
 
     # if tired and not nudged:
