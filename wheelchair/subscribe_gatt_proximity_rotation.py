@@ -132,6 +132,8 @@ def handle_rotation_data(handle, value_bytes):
             print ("Tired - False - 0 Sent")
             ser.write('0'.encode())
 
+        reseted_value += dif_prev_rotation
+
     except:
         print("Can't parse - Rotation")
 
