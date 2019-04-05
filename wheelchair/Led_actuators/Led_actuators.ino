@@ -12,10 +12,11 @@
 #define VIB_PIN 4
 #define PROX_PIN A0
 int proximity_value = - 10000;       
-char property_id = "surf-wheel-proximity-b6f1";
+//char property_id = "surf-wheel-proximity-b6f1";
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS      10
+bool nudged = false;
 
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
@@ -93,40 +94,32 @@ void setup() {
   }
 
 void loop() {
-  proximity_value = analogRead(PROX_PIN);
-  Serial.print("surf-wheel-proximity-b6f1");
-  Serial.print(",");
-  Serial.print(proximity_value);
-  Serial.print(",");
+//  proximity_value = analogRead(PROX_PIN);
+//  Serial.print("surf-wheel-proximity-b6f1");
+////  Serial.print(",");
+//  Serial.print(proximity_value);
+//  Serial.print(",");
 //  Serial.println("");
-char command = Serial.read();
-  if (command == '1') {
-    tired = true;
-//    vibration = true; //how to make it vibrate only after a 0, not after a 1
-//    delay (200)
-//    vibtarion = false
-  } else if (command == '0') {
-    tired = false;
-    green_led();
-//    vibration = false;
-  }
-//
-//  if (vibration) {
-//  vibration_enabled();
-//  }
-//  
+  char command = Serial.read();
+     if (command == '1') {
+       tired = true;
+      } else if (command == '0') {
+        tired = false;
+        green_led();
+      }
 
 if (tired) {
   yellow_led();
   vibration_enabled();
   }
+else {
+  green_led();
+  }
 }
-  
-
 //void loop() {
 //    green_led();
 //    delay(300); // Delay for a period of time (in milliseconds).
 //    yellow_led();
 //    delay(300); // Delay for a period of time (in milliseconds).
 ////
-//  }
+// 
