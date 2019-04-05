@@ -92,7 +92,6 @@ def serial_proximity_values():
         # ser.write('1'.encode)
 
 
-
 # def handle_proximity_data(handle, value_bytes):
 #     """
 #     handle -- integer, characteristic read handle the data was received on
