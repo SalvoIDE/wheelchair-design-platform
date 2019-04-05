@@ -79,7 +79,7 @@ def handle_proximity_data(handle, value_bytes):
         # print(proximity_value)
         print("Proximity Success 1")
         # run our code below that checks if user is tired
-        # check_tiredness()
+        check_tiredness()
         # print("Proximity Success 1")
 
     except:
@@ -95,7 +95,9 @@ def handle_rotation_data(handle, value_bytes):
     print("Received rotation data: %s (handle %d)" % (rot_value_str, handle))
 
     try:
-        global rotation_value, dif_prev_rotation, total_rotation_value
+        global rotation_value
+        global dif_prev_rotation
+        global total_rotation_value
         total_rotation_value = float(rot_value_str)
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
@@ -134,7 +136,7 @@ def check_tiredness():
         ser.write('0'.encode())
 
 
-    # # above recommendation and self propelled
+    # above recommendation and self propelled
     # if reseted_value > RECOMMENDED_NUM_ROTATION:
     #     # tired = True
     #     print("Tired - True - 1 sent")
@@ -142,7 +144,7 @@ def check_tiredness():
     # else:
     #     print ("Tired - False - 0 Sent")
     #     ser.write('0'.encode())
-    #     # nudged = False
+        # nudged = False
 
 
     # if tired and not nudged:
