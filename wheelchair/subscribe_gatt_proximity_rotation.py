@@ -110,6 +110,8 @@ def handle_rotation_data(handle, value_bytes):
         print("Can't parse - Rotation")
 
 def check_tiredness():
+    global proximity_value
+    global rotation_value
     if proximity_value is None or rotation_value is None:
         return
 
@@ -119,14 +121,14 @@ def check_tiredness():
     if proximity_value < 440:
         # nobodybehind = True
         print("Nobody behind, user self pushing")
-        reseted_value += dif_prev_rotation
+        # reseted_value += dif_prev_rotation
         ser.write('1'.encode())
         #delete this after
 
     # if someone is pushing them
     else:
         # nobodybehind = False
-        reseted_value = 0
+        # reseted_value = 0
         print("User being pushed, reset rotations")
         # tired = False
         ser.write('0'.encode())
