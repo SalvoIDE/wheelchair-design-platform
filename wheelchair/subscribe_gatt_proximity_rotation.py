@@ -81,15 +81,15 @@ def serial_proximity_values():
         # Otherwise, we show a warning
         else:
             print('Warning: unknown property ' + property_id)
-
-    if proximity_value > 260:
-        ser.write('0'.encode)
-        global reseted_value
-        reseted_value = 0
-        print("someone behind - 0 sent)")
-    else:
-        check_tiredness()
-        # ser.write('1'.encode)
+    # 
+    # if proximity_value > 260:
+    #     ser.write('0'.encode)
+    #     global reseted_value
+    #     reseted_value = 0
+    #     print("someone behind - 0 sent)")
+    # else:
+    #     check_tiredness()
+    #     # ser.write('1'.encode)
 
 
 # def handle_proximity_data(handle, value_bytes):
