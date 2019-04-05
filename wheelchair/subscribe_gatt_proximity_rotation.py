@@ -39,9 +39,7 @@ rotation_value = 0
 reseted_value = 0
 dif_prev_rotation = 0
 
-# We can read the details of our thing,
-# i.e. retrieving its information from the hub
-my_thing.read()
+
 
 
 # Start reading the serial port
