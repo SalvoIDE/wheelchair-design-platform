@@ -114,25 +114,29 @@ def handle_rotation_data(handle, value_bytes):
 def check_tiredness():
     global proximity_value
     global rotation_value
+    global nudged
+
     if proximity_value is None or rotation_value is None:
         return
 
     print("Checking tiredness!")
 
     # if nobody is behind
-    if proximity_value < 300:
-        nobodybehind = True
+    if proximity_value < 300 and not nudged:
+        # nobodybehind = True
         print("Nobody behind, user self pushing")
         # reseted_value += dif_prev_rotation
         ser.write('0'.encode())
+        nudged = True
         #delete this after
     # if someone is pushing them
     else:
-        nobodybehind = False
+        # nobodybehind = False
         # reseted_value = 0
         print("User being pushed, reset rotations")
         # tired = False
         ser.write('1'.encode())
+        nudge = False
 
 
     # above recommendation and self propelled
