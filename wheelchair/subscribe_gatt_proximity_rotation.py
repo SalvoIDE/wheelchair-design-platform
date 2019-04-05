@@ -82,7 +82,7 @@ def serial_proximity_values():
         else:
             print('Warning: unknown property ' + property_id)
 
-    if proximity_value < 260:
+    if proximity_value > 260:
         ser.write('0'.encode)
         global reseted_value
         reseted_value = 0
