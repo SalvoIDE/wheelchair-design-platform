@@ -76,7 +76,7 @@ def handle_proximity_data(handle, value_bytes):
         find_or_create("Surf Wheel Proximity",
                        PropertyType.PROXIMITY).update_values([proximity_value])
 
-        # print(proximity_value)
+        print(proximity_value)
         print("Proximity Success 1")
         # run our code below that checks if user is tired
         check_tiredness()
@@ -101,7 +101,7 @@ def handle_rotation_data(handle, value_bytes):
         total_rotation_value = float(rot_value_str)
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
-        # print(total_rotation_value)
+        print(total_rotation_value)
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
