@@ -71,10 +71,10 @@ def serial_proximity_values():
         # Convert the bytes into string
         proximity_value = line_bytes.decode('utf-8')
         # # Split the string using commas as separator, we get a list of strings
-        prox_value = line.split(',')
+        prox_values = line.split(',')
         # Use the first element of the list as property id
         property_id = values.pop(0)
-
+        print(proximity_value)
         # Get the property from the thing
         prop = my_thing.properties[property_id]
         # If we find the property, we update the values (rest of the list)
@@ -181,13 +181,19 @@ def check_tiredness():
         # nudged = False
     #
     # # above recommendation and self propelled
+    if proximity_value < 260
+        ser.write('0'.encode)
+        reseted_value = 0
+        print("someone behind - 0 sent)")
+
+
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         # tired = True
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
-        time.sleep(10)
-        ser.write('0'.encode())
-        reseted_value = 0
+        # time.sleep(10)
+        # ser.write('0'.encode())
+        # reseted_value = 0
     else:
         print ("Tired - False - 0 Sent")
         ser.write('0'.encode())
