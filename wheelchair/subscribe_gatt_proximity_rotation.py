@@ -55,40 +55,40 @@ def find_or_create(property_name, property_type):
     return my_thing.find_property_by_name(property_name)
 
 
-# def handle_proximity_data(handle, value_bytes):
-#     """
-#     handle -- integer, characteristic read handle the data was received on
-#     value_bytes -- bytearray, the data returned in the notification
-#     """
-#
-#     # print(str(value_bytes))
-#     # decode data into a value that we can interpret for proximity
-#     # this value_str is a local variable
-#     prox_value_str = value_bytes.decode('utf-8')
-#     print("Received proximity data: %s (handle %d)" % (prox_value_str, handle))
-#
-#     try:
-#         # print this value again as proximity data and handle
-#         global proximity_value
-#         # create a variable with the local variable data of proximity given as value_str
-#         proximity_value = float(prox_value_str)
-#         # find the characteristic in the hub of this type, if it's not there, create it for us
-#         find_or_create("Surf Wheel Proximity",
-#                        PropertyType.PROXIMITY).update_values([proximity_value])
-#
-#         print(proximity_value)
-#         print("Proximity Success 1")
-#         # run our code below that checks if user is tired
-#         # if proximity_value < 300:                # nobodybehind = True
-#         #     print("Nobody behind, user self pushing")
-#         #     # reseted_value += dif_prev_rotation
-#         #     ser.write('1'.encode())
-#         #     break
-#         # # check_tiredness()
-#         # # print("Proximity Success 1")
-#
-#     except:
-#         print("Can't Parse Proximity")
+def handle_proximity_data(handle, value_bytes):
+    """
+    handle -- integer, characteristic read handle the data was received on
+    value_bytes -- bytearray, the data returned in the notification
+    """
+
+    # print(str(value_bytes))
+    # decode data into a value that we can interpret for proximity
+    # this value_str is a local variable
+    prox_value_str = value_bytes.decode('utf-8')
+    # print("Received proximity data: %s (handle %d)" % (prox_value_str, handle))
+
+    try:
+        # print this value again as proximity data and handle
+        global proximity_value
+        # create a variable with the local variable data of proximity given as value_str
+        proximity_value = float(prox_value_str)
+        # find the characteristic in the hub of this type, if it's not there, create it for us
+        find_or_create("Surf Wheel Proximity",
+                       PropertyType.PROXIMITY).update_values([proximity_value])
+
+        # print(proximity_value)
+        # print("Proximity Success 1")
+        # run our code below that checks if user is tired
+        # if proximity_value < 300:                # nobodybehind = True
+        #     print("Nobody behind, user self pushing")
+        #     # reseted_value += dif_prev_rotation
+        #     ser.write('1'.encode())
+        #     break
+        # # check_tiredness()
+        # # print("Proximity Success 1")
+
+    # except:
+    #     print("Can't Parse Proximity")
 
 def handle_rotation_data(handle, value_bytes):
     """
