@@ -112,6 +112,7 @@ def handle_rotation_data(handle, value_bytes):
         total_rotation_value = float(rot_value_str)
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
+        reseted_value += dif_prev_rotation
 
         print(total_rotation_value)
         print(reseted_value)
@@ -189,7 +190,6 @@ def check_tiredness():
     #
     # # above recommendation and self propelled
 
-    reseted_value += dif_prev_rotation
 
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         # tired = True
