@@ -79,8 +79,13 @@ def handle_proximity_data(handle, value_bytes):
         print(proximity_value)
         print("Proximity Success 1")
         # run our code below that checks if user is tired
-        check_tiredness()
-        # print("Proximity Success 1")
+        # if proximity_value < 300:                # nobodybehind = True
+        #     print("Nobody behind, user self pushing")
+        #     # reseted_value += dif_prev_rotation
+        #     ser.write('1'.encode())
+        #     break
+        # # check_tiredness()
+        # # print("Proximity Success 1")
 
     except:
         print("Can't Parse Proximity")
@@ -132,12 +137,12 @@ def check_tiredness():
         #delete this after
     # if someone is pushing them
 
-    if proximity_value > 300:
+    else:
         # nobodybehind = False
+        ser.write('0'.encode())
         # reseted_value = 0
         print("User being pushed, reset rotations")
         # tired = False
-        ser.write('0'.encode())
         break
         # nudged = False
 
