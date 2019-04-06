@@ -88,7 +88,7 @@ def handle_rotation_data(handle, value_bytes):
         ser.write('0'.encode())
         print("Not Tired - 0 sent")
 
-        if reseted_value > 3:
+        if reseted_value > RECOMMENDED_NUM_ROTATION:
             # tired = True
             print("Tired - True - 1 sent")
             ser.write('1'.encode())
