@@ -92,10 +92,10 @@ def handle_rotation_data(handle, value_bytes):
             ser.write('1'.encode())
             # time.sleep(10)
             # ser.write('0'.encode())
-        else:
-            print ("Tired - False - 0 Sent")
-            ser.write('0'.encode())
-        # check_tiredness()
+        # else:
+        #     print ("Tired - False - 0 Sent")
+        #     ser.write('0'.encode())
+        # # check_tiredness()
 
         # reseted_value = 0
 
