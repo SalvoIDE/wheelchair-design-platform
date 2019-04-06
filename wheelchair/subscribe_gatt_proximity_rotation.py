@@ -75,6 +75,7 @@ def handle_rotation_data(handle, value_bytes):
         global reseted_value
         global nudged
         total_rotation_value = float(rot_value_str)
+        reseted_value = 0
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
         reseted_value += dif_prev_rotation
