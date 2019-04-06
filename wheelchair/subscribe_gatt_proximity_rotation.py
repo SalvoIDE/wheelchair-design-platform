@@ -85,15 +85,15 @@ def handle_rotation_data(handle, value_bytes):
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
 
+        ser.write('0'.encode())
+        print("Not Tired - 0 sent")
 
-        if reseted_value > 1:
+        if reseted_value > 3:
             # tired = True
             print("Tired - True - 1 sent")
             ser.write('1'.encode())
-            time.sleep(15)
-            ser.write('0'.encode())
+            time.sleep(6)
             reseted_value = 0
-            print("Not Tired - 0 sent")
 
         # else:
         #     print ("Tired - False - 0 Sent")
