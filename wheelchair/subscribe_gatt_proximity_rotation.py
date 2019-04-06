@@ -86,8 +86,6 @@ def handle_rotation_data(handle, value_bytes):
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
 
-        ser.write('0'.encode())
-        print("Not Tired - 0 sent")
 
         if reseted_value > RECOMMENDED_NUM_ROTATION:
             # tired = True
