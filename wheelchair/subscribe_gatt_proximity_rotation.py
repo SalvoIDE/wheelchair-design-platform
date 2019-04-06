@@ -99,7 +99,7 @@ def check_tiredness():
     global RECOMMENDED_NUM_ROTATION
     # global nudged
 
-    if reseted_value [0] > RECOMMENDED_NUM_ROTATION:
+    if reseted_value[0] > RECOMMENDED_NUM_ROTATION:
         # tired = True
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
