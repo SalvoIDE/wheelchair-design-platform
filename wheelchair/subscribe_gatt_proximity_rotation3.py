@@ -31,6 +31,7 @@ ADDRESS_TYPE = pygatt.BLEAddressType.random
 
 RECOMMENDED_NUM_ROTATION = 3
 nudged = False
+# nobodybehind = False
 tired = False
 proximity_value = None
 total_rotation_value = None
@@ -47,6 +48,7 @@ ser = serial.Serial(
     baudrate = 9600,
     timeout = 2)
 
+# USER_STATUS_BEHIND = 600
 
 def find_or_create(property_name, property_type):
     """Search a property by name, create it if not found, then return it."""
@@ -58,6 +60,40 @@ def find_or_create(property_name, property_type):
 
 
 
+# def handle_proximity_data(handle, value_bytes):
+#     """
+#     handle -- integer, characteristic read handle the data was received on
+#     value_bytes -- bytearray, the data returned in the notification
+#     """
+#
+#     # print(str(value_bytes))
+#     # decode data into a value that we can interpret for proximity
+#     # this value_str is a local variable
+#     prox_value_str = value_bytes.decode('utf-8')
+#     # print("Received proximity data: %s (handle %d)" % (prox_value_str, handle))
+#
+#     try:
+#         # print this value again as proximity data and handle
+#         global proximity_value
+#         # create a variable with the local variable data of proximity given as value_str
+#         proximity_value = float(prox_value_str)
+#         # find the characteristic in the hub of this type, if it's not there, create it for us
+#         find_or_create("Surf Wheel Proximity",
+#                        PropertyType.PROXIMITY).update_values([proximity_value])
+#
+#         # print(proximity_value)
+#         # print("Proximity Success 1")
+#         # run our code below that checks if user is tired
+#         if proximity_value < 300:                # nobodybehind = True
+#             print("Nobody behind, user self pushing")
+#             # reseted_value += dif_prev_rotation
+#             ser.write('1'.encode())
+#             break
+# #         # # check_tiredness()
+#         # # print("Proximity Success 1")
+#
+#     except:
+#         print("Can't Parse Proximity")
 
 def handle_rotation_data(handle, value_bytes):
     """
@@ -83,14 +119,14 @@ def handle_rotation_data(handle, value_bytes):
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
-
-
+        # check_tiredness()
+        # serial_proximity_values()
         if reseted_value > RECOMMENDED_NUM_ROTATION:
             # tired = True
             print("Tired - True - 1 sent")
             ser.write('1'.encode())
             time.sleep(10)
-            # # ser.write('0'.encode())
+            # ser.write('0'.encode())
             reseted_value = 0
         else:
             print ("Tired - False - 0 Sent")
@@ -101,6 +137,96 @@ def handle_rotation_data(handle, value_bytes):
     except:
         print("Can't parse - Rotation")
 
+
+# Read the next line from the serial port
+# and update the property values
+# def serial_proximity_values():
+#     # Read one line
+#     global proximity_value
+#     line_bytes = ser.readline()
+#     # If the line is not empty
+#     if len(line_bytes) > 0:
+#         # Convert the bytes into string
+#         proximity_value = line_bytes.decode('utf-8')
+#         # # Split the string using commas as separator, we get a list of strings
+#         prox_values = line.split(',')
+#         # Use the first element of the list as property id
+#         property_id = values.pop(0)
+#         print(proximity_value)
+#         # Get the property from the thing
+#         prop = my_thing.properties[property_id]
+#         # If we find the property, we update the values (rest of the list)
+#         if prop is not None:
+#             prop.update_values([float(x) for x in prox_values])
+#         # Otherwise, we show a warning
+#         else:
+#             print('Warning: unknown property ' + property_id)
+#     #
+#     # if proximity_value > 260:
+#     #     ser.write('0'.encode)
+#     #     global reseted_value
+#     #     reseted_value = 0
+#     #     print("someone behind - 0 sent)")
+#     # else:
+#     #     check_tiredness()
+#     #     # ser.write('1'.encode)
+
+# def check_tiredness():
+#     global proximity_value
+#     global rotation_value
+#     global total_rotation_value
+#     global reseted_value
+#     # if proximity_value is None or rotation_value is None:
+#     #     return
+#
+#     print("Checking tiredness!")
+
+    # if nobody is behind
+    # if proximity_value < 300:
+    #     # nobodybehind = True
+    #     print("Nobody behind, user self pushing")
+    #     ser.write('1'.encode())
+    #     break
+    #     # global nudged
+        # nudged = True
+        #delete this after
+    # if someone is pushing them
+    # else:
+    #     # nobodybehind = False
+    #     ser.write('0'.encode())
+    #     reseted_value = 0
+    #     print("User being pushed, reset rotations")
+    #     # tired = False
+    #     break
+        # nudged = False
+    #
+    # # above recommendation and self propelled
+
+
+    # if reseted_value > RECOMMENDED_NUM_ROTATION:
+    #     # tired = True
+    #     print("Tired - True - 1 sent")
+    #     ser.write('1'.encode())
+    #     time.sleep(10)
+    #     ser.write('0'.encode())
+    #     reseted_value = 0
+    # else:
+    #     print ("Tired - False - 0 Sent")
+    #     ser.write('0'.encode())
+        # nudged = False
+
+    # if tired and not nudged:
+    # if tired:
+    #     ser.write('1'.encode())
+    #     print("User is tired - 1 sent")
+    #     global nudged
+    # #     nudged = True
+    #
+    # else:
+    #     ser.write('0'.encode())
+    #     print("User is not tired - 0 sent")
+    #     nudged = False
+    #
 
 def discover_characteristic(device):
     """List characteristics of a device"""
