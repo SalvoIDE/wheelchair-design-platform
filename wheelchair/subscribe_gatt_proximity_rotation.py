@@ -85,19 +85,18 @@ def handle_rotation_data(handle, value_bytes):
         print("Rotation Success 1")
 
 
-        if reseted_value > RECOMMENDED_NUM_ROTATION:
-            # tired = True
-            print("Tired - True - 1 sent")
-            ser.write('1'.encode())
-            time.sleep(10)
-            # # ser.write('0'.encode())
-            reseted_value = 0
-            break
-        else:
-            print ("Tired - False - 0 Sent")
-            ser.write('0'.encode())
-
-        reseted_value += dif_prev_rotation
+        # if reseted_value > RECOMMENDED_NUM_ROTATION:
+        #     # tired = True
+        #     print("Tired - True - 1 sent")
+        #     ser.write('1'.encode())
+        #     time.sleep(10)
+        #     # # ser.write('0'.encode())
+        #     reseted_value = 0
+        # else:
+        #     print ("Tired - False - 0 Sent")
+        #     ser.write('0'.encode())
+        #
+        # reseted_value += dif_prev_rotation
 
     except:
         print("Can't parse - Rotation")
