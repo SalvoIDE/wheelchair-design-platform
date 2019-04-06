@@ -79,8 +79,8 @@ def handle_rotation_data(handle, value_bytes):
         rotation_value = total_rotation_value
         reseted_value += dif_prev_rotation
 
-        print(total_rotation_value)
-        print(reseted_value)
+        print("Total rotations:" total_rotation_value)
+        print("Rotations self pushed:" reseted_value)
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
@@ -93,6 +93,7 @@ def handle_rotation_data(handle, value_bytes):
             time.sleep(15)
             ser.write('0'.encode())
             reseted_value = 0
+            print("Not Tired - 0 sent")
 
         # else:
         #     print ("Tired - False - 0 Sent")
