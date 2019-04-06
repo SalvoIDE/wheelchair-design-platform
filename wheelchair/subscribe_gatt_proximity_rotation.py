@@ -86,7 +86,16 @@ def handle_rotation_data(handle, value_bytes):
         print("Rotation Success 1")
 
 
-        check_tiredness()
+        if reseted_value[0] > RECOMMENDED_NUM_ROTATION:
+            # tired = True
+            print("Tired - True - 1 sent")
+            ser.write('1'.encode())
+            # time.sleep(10)
+            # ser.write('0'.encode())
+        else:
+            print ("Tired - False - 0 Sent")
+            ser.write('0'.encode())
+        # check_tiredness()
 
         # reseted_value = 0
 
