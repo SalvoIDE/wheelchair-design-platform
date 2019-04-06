@@ -73,6 +73,7 @@ def handle_rotation_data(handle, value_bytes):
         global dif_prev_rotation
         global total_rotation_value
         global reseted_value
+        global nudged
         total_rotation_value = float(rot_value_str)
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
@@ -87,6 +88,8 @@ def handle_rotation_data(handle, value_bytes):
 
         check_tiredness()
 
+        # reseted_value = 0
+
 
     except:
         print("Can't parse - Rotation")
@@ -94,13 +97,14 @@ def handle_rotation_data(handle, value_bytes):
 def check_tiredness():
     global reseted_value
     global RECOMMENDED_NUM_ROTATION
-    if reseted_value > RECOMMENDED_NUM_ROTATION:
+    # global nudged
+
+    if reseted_value [0] > RECOMMENDED_NUM_ROTATION:
         # tired = True
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
         # time.sleep(10)
         # ser.write('0'.encode())
-        reseted_value = 0
     else:
         print ("Tired - False - 0 Sent")
         ser.write('0'.encode())
