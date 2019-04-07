@@ -29,13 +29,19 @@ ADDRESS_TYPE = pygatt.BLEAddressType.random
 # Recommended number of rotation
 # Did we already nudged
 
+#this is the rotations until the user is tired
 RECOMMENDED_NUM_ROTATION = 3
-nudged = False
+# nudged = False
 tired = False
 proximity = None
 total_rotation_value = None
 rotation_value = 0
+
+#this is a value of the rotations that are relevant
+#for determining if the user is tired or not
 reseted_value = 0
+
+#the difference between the previous and current rotation
 dif_prev_rotation = 0
 
 
@@ -125,11 +131,16 @@ def handle_rotation_data(handle, value_bytes):
         print("Can't parse - Rotation")
 
 def check_tiredness():
+    print("Checking tiredness!")
     global reseted_value
     global RECOMMENDED_NUM_ROTATION
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
+        time.sleep(6)
+        reseted_value = 0
+        ser.write('0'.encode())
+        print("Not Tired - 0 sent")
 
 
 def discover_characteristic(device):
