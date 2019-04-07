@@ -100,7 +100,14 @@ void loop() {
   Serial.print(proximity_value);
   Serial.print(",");
   Serial.println("");
-  char command = Serial.read();
+
+
+if (proximity_value > 100) {
+    tired = false;
+}
+
+else {
+    char command = Serial.read();
      if (command == '1') {
        tired = true;
        vibration = true;
@@ -108,6 +115,7 @@ void loop() {
         tired = false;
         green_led();
       }
+}
 
 if (vibration) {
   vibration_enabled();
