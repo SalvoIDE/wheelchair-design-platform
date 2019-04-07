@@ -72,9 +72,8 @@ def serial_proximity_values():
         # Get the property from the thing
         prop = my_thing.properties[prox_property_id]
         # If we find the property, we update the values (rest of the list)
+
         print("Proximity:")
-        print(read_proximity)
-        print(", Line:")
         print (line)
 
         if prop is not None:
