@@ -66,6 +66,7 @@ def serial_proximity_values():
         print("Proxmity:")
         proximity_value_str = line_bytes.decode('utf-8')
         # Split the string using commas as separator, we get a list of strings
+        proximity_value = float(proximity_value_str)
         # proximity_value = proximity_value_str.split(',')
         # Use the first element of the list as property id
         # property_id = proximity_value.pop(0)
@@ -75,6 +76,7 @@ def serial_proximity_values():
 
         print("Proximity:")
         print(proximity_value_str)
+        print(proximity_value)
         #
         # if prop is not None:
         #     prop.update_value([proximity_value])
@@ -83,8 +85,8 @@ def serial_proximity_values():
         #     print('Warning: unknown property ' + prox_property_id)
         # # Finally, we call this method again
 
-        if proximity_value_str[0] < 100:
-            check_tiredness()
+        # if proximity_value_str[0] < 100:
+        #     check_tiredness()
 
         else:
             global reseted_value
