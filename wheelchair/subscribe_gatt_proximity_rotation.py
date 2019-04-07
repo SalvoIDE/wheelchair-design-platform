@@ -83,8 +83,8 @@ def serial_proximity_values():
     # Finally, we call this method again
 
 
-serial_proximity_values()
 
+serial_proximity_values()
 
 def handle_rotation_data(handle, value_bytes):
     """
