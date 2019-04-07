@@ -32,7 +32,7 @@ ADDRESS_TYPE = pygatt.BLEAddressType.random
 RECOMMENDED_NUM_ROTATION = 3
 nudged = False
 tired = False
-proximity_value = None
+proximity = None
 total_rotation_value = None
 rotation_value = 0
 reseted_value = 0
@@ -83,16 +83,7 @@ def serial_proximity_values():
         # else:
         #     print('Warning: unknown property ' + prox_property_id)
         # # # Finally, we call this method again
-        # if proximity_value_str[0] > 1:
-        #     # check_tiredness()
-        #     # ser.write('1'.encode())
-        #     print("1 sent")
 
-        # else:
-        #     global reseted_value
-        #     reseted_value = 0
-        #     ser.write('0'.encode())
-        #     print("Somebody pushing - 0 sent")
 
     except:
         print("cant parse proximity")
@@ -121,6 +112,7 @@ def handle_rotation_data(handle, value_bytes):
         reseted_value += dif_prev_rotation
 
         serial_proximity_values()
+        check_tiredness()
 
         print("Total rotations:")
         print(total_rotation_value)
@@ -134,8 +126,11 @@ def handle_rotation_data(handle, value_bytes):
         print("Can't parse - Rotation")
 
 def check_tiredness():
+    global proximity
     global reseted_value
     global RECOMMENDED_NUM_ROTATION
+    if proximity > 100
+        "sent 0"
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
