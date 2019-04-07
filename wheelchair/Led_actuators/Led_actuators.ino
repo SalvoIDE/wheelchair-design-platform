@@ -37,7 +37,9 @@ void vibration_enabled() {
    analogWrite(VIB_PIN, i);
    delay(100);
    analogWrite(VIB_PIN, 0);
-   delay(200);
+//   delay(200);
+//   delay (1000);
+//   vibration = false;
 }
 
 
@@ -102,12 +104,14 @@ void loop() {
      if (command == '1') {
        tired = true;
        vibration = true;
-       delay (1000);
-       vibration = false;
       } else if (command == '0') {
         tired = false;
         green_led();
       }
+
+if (vibration) {
+  vibration_enabled();
+}
 
 if (tired) {
   yellow_led();
