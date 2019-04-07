@@ -83,7 +83,7 @@ def serial_proximity_values():
         # else:
         #     print('Warning: unknown property ' + prox_property_id)
         # # # Finally, we call this method again
-        if proximity_value_str > 1:
+        if proximity_value_str[0] > 1:
             # check_tiredness()
             # ser.write('1'.encode())
             print("1 sent")
