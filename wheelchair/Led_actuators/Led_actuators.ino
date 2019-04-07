@@ -70,7 +70,7 @@ void yellow_led() {
     pixels.setPixelColor(3, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(4, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(5, pixels.Color(200,50,0)); // Moderately bright green color.
-    pixels.setPixelColor(6, pixels.Color(200,50,0)); // Moderately bright green color.
+    pixels.setPixelColor(6, pixels.Color(200,50,0)); // Moderately bri§ght green color.
     pixels.setPixelColor(7, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(8, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(9, pixels.Color(200,50,0)); // Moderately bright green color.
@@ -93,11 +93,11 @@ void setup() {
 
 void loop() {
   proximity_value = analogRead(PROX_PIN);
-  Serial.print("surf-wheel-proximity-b6f1");
-  Serial.print(",");
+//  Serial.print("surf-wheel-proximity-b6f1");
+//  Serial.print(",");
   Serial.print(proximity_value);
-  Serial.print(",");
-  Serial.println("");
+//  Serial.print(",");
+//  Serial.println("");
   char command = Serial.read();
      if (command == '1') {
        tired = true;
