@@ -44,9 +44,6 @@ reseted_value = 0
 #the difference between the previous and current rotation
 dif_prev_rotation = 0
 
-
-
-
 # Start reading the serial port
 ser = serial.Serial(
     port = os.environ['SERIAL'],
@@ -61,26 +58,27 @@ def find_or_create(property_name, property_type):
                                  property_type=property_type)
     return my_thing.find_property_by_name(property_name)
 
-# Read the next line from the serial port
-# and update the property values
-def serial_proximity_values():
-    # Read one line
-    line_bytes = ser.readline()
 
+# Read the next line from the serial port for proximity sensor
+# and update the property values
+# Proximity is measured from serial because cables are entangled on wheels
+def serial_proximity_values():
+    # Read one line from serial
+    line_bytes = ser.readline()
     # if len(line_bytes) > 0:
     #     # Convert the bytes into string
     try:
+        # Convert bytes into string
         proximity_value_str = line_bytes.decode('utf-8')
         # Split the string using commas as separator, we get a list of strings
         proximity_value = proximity_value_str.split(',')
         # Use the first element of the list as property id
-        proximity = proximity_value_str[0]
         # property_id = proximity_value.pop(0)
         # # Get the property from the thing
         # prop = my_thing.properties[property_id]
         # # If we find the property, we update the values (rest of the list)
         print("Proximity:")
-        print(proximity)
+        print(proximity_value_str[0])
         #
         # if prop is not None:
         #     prop.update_value([proximity_value])
@@ -89,9 +87,9 @@ def serial_proximity_values():
         #     print('Warning: unknown property ' + prox_property_id)
         # # # Finally, we call this method again
 
-
+    # in case something does not work
     except:
-        print("cant parse proximity")
+        print("Can't Parse Proximity")
 
 
 def handle_rotation_data(handle, value_bytes):
@@ -103,8 +101,6 @@ def handle_rotation_data(handle, value_bytes):
     rot_value_str = value_bytes.decode('utf-8')
     print("Received rotation data: %s (handle %d)" % (rot_value_str, handle))
 
-
-
     try:
         global rotation_value
         global dif_prev_rotation
@@ -112,11 +108,18 @@ def handle_rotation_data(handle, value_bytes):
         global reseted_value
         global nudged
         total_rotation_value = float(rot_value_str)
+
+        # Calculate the difference between this measurement and the previous one
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
+
+        # value that adds up the difference every time it runs
         reseted_value += dif_prev_rotation
 
+        # Call the function that reads proximity
         serial_proximity_values()
+
+        # Call the function that checks if the user is tired
         check_tiredness()
 
         print("Total rotations:")
