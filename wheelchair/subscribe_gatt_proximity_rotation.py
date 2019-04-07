@@ -129,7 +129,7 @@ def check_tiredness():
     global proximity
     global reseted_value
     global RECOMMENDED_NUM_ROTATION
-    if proximity > 100
+    if proximity > 156
         "sent 0"
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         print("Tired - True - 1 sent")
