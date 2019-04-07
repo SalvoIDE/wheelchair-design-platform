@@ -68,7 +68,7 @@ def serial_proximity_values():
         # Split the string using commas as separator, we get a list of strings
         proximity_value = proximity_value_str.split(',')
         # Use the first element of the list as property id
-        proximity_value = float(proximity_value_str)
+        # proximity_value = float(proximity_value_str)
 
         # property_id = proximity_value.pop(0)
         # # Get the property from the thing
