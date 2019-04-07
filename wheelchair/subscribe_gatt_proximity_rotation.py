@@ -55,9 +55,34 @@ def find_or_create(property_name, property_type):
                                  property_type=property_type)
     return my_thing.find_property_by_name(property_name)
 
-
-
-
+# Read the next line from the serial port
+# and update the property values
+# def serial_proximity_values():
+#     # Read one line
+#     read_proximity = ser.readline()
+#     # If the line is not empty
+#     if len(line_bytes) > 0:
+#         # Convert the bytes into string
+#         line = line_bytes.decode('utf-8')
+#         # Split the string using commas as separator, we get a list of strings
+#         values = line.split(',')
+#         # Use the first element of the list as property id
+#         prox_property_id = values.pop(0)
+#         # Get the property from the thing
+#         prop = my_thing.properties[prox_property_id]
+#         # If we find the property, we update the values (rest of the list)
+#         print read_proximity
+#         print line
+#         if prop is not None:
+#             prop.update_values([float(x) for x in values])
+#         # Otherwise, we show a warning
+#         else:
+#             print('Warning: unknown property ' + prox_property_id)
+#     # Finally, we call this method again
+#     serial_proximity_values()
+#
+# serial_proximity_values()
+#
 
 def handle_rotation_data(handle, value_bytes):
     """
@@ -96,31 +121,25 @@ def handle_rotation_data(handle, value_bytes):
             ser.write('0'.encode())
             print("Not Tired - 0 sent")
 
-        # else:
-        #     print ("Tired - False - 0 Sent")
-        #     ser.write('0'.encode())
-        # # check_tiredness()
-
-        # reseted_value = 0
 
 
     except:
         print("Can't parse - Rotation")
 
-def check_tiredness():
-    global reseted_value
-    global RECOMMENDED_NUM_ROTATION
-    # global nudged
-
-    if reseted_value[0] > RECOMMENDED_NUM_ROTATION:
-        # tired = True
-        print("Tired - True - 1 sent")
-        ser.write('1'.encode())
-        # time.sleep(10)
-        # ser.write('0'.encode())
-    else:
-        print ("Tired - False - 0 Sent")
-        ser.write('0'.encode())
+# def check_tiredness():
+#     global reseted_value
+#     global RECOMMENDED_NUM_ROTATION
+#     # global nudged
+#
+#     if reseted_value[0] > RECOMMENDED_NUM_ROTATION:
+#         # tired = True
+#         print("Tired - True - 1 sent")
+#         ser.write('1'.encode())
+#         # time.sleep(10)
+#         # ser.write('0'.encode())
+#     else:
+#         print ("Tired - False - 0 Sent")
+#         ser.write('0'.encode())
 
 
 def discover_characteristic(device):
