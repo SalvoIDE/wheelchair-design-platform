@@ -9,7 +9,7 @@
 // Which pin on the Arduino is connected to the NeoPixels?
 // On a Trinket or Gemma we suggest changing this to 1
 #define LED_PIN 2
-#define VIB_PIN 4
+#define VIB_PIN 3
 #define PROX_PIN A0
 int proximity_value = - 10000;       
 //char property_id = "surf-wheel-proximity-b6f1";
@@ -23,11 +23,10 @@ bool nudged = false;
 // example for more information on possible values.
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
-int i = 255;
+int i = 225;
 int delayval = 500; // delay for half a second
 boolean tired = false;
 boolean vibration = false;
-
 
 void vibration_enabled() {
    Serial.println("vibrating on");
@@ -84,25 +83,28 @@ void yellow_led() {
 
 void setup() {
   pinMode(VIB_PIN, OUTPUT);
+  analogWrite(VIB_PIN, LOW);
   pinMode(PROX_PIN, INPUT);
   Serial.println("let's start this zoo journey");
   pixels.begin(); // This initializes the NeoPixel library.
   Serial.begin(9600);
   pinMode(LED_PIN, OUTPUT);
-//  pinMode(VIB_PIN, OUTPUT);
- pixels.show();
+  pixels.show();
   }
 
 void loop() {
-//  proximity_value = analogRead(PROX_PIN);
-//  Serial.print("surf-wheel-proximity-b6f1");
-////  Serial.print(",");
-//  Serial.print(proximity_value);
-//  Serial.print(",");
-//  Serial.println("");
+  proximity_value = analogRead(PROX_PIN);
+  Serial.print("surf-wheel-proximity-b6f1");
+  Serial.print(",");
+  Serial.print(proximity_value);
+  Serial.print(",");
+  Serial.println("");
   char command = Serial.read();
      if (command == '1') {
        tired = true;
+       vibration = true;
+       delay (1000);
+       vibration = false;
       } else if (command == '0') {
         tired = false;
         green_led();
@@ -110,16 +112,8 @@ void loop() {
 
 if (tired) {
   yellow_led();
-  vibration_enabled();
-  }
+}
 else {
   green_led();
   }
 }
-//void loop() {
-//    green_led();
-//    delay(300); // Delay for a period of time (in milliseconds).
-//    yellow_led();
-//    delay(300); // Delay for a period of time (in milliseconds).
-////
-// 
