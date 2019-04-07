@@ -64,7 +64,7 @@ def serial_proximity_values():
     # if len(line_bytes) > 0:
     #     # Convert the bytes into string
     print("Proxmity:")
-    try
+    try:
         proximity_value_str = line_bytes.decode('utf-8')
         # Split the string using commas as separator, we get a list of strings
         proximity_value = proximity_value_str.split(',')
@@ -86,7 +86,7 @@ def serial_proximity_values():
         #     print('Warning: unknown property ' + prox_property_id)
         # # Finally, we call this method again
 
-        else
+    else:
             print("cant parse proximity")
         # if proximity_value_str[0] < 100:
         #     check_tiredness()
