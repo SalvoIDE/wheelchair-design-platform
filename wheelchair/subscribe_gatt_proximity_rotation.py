@@ -87,12 +87,12 @@ def serial_proximity_values():
 
         # if proximity_value_str[0] < 100:
         #     check_tiredness()
-
-        else:
-            global reseted_value
-            reseted_value = 0
-            ser.write('0'.encode())
-            print("Somebody pushing - 0 sent")
+        # 
+        # else:
+        #     global reseted_value
+        #     reseted_value = 0
+        #     ser.write('0'.encode())
+        #     print("Somebody pushing - 0 sent")
 
 
 def handle_rotation_data(handle, value_bytes):
