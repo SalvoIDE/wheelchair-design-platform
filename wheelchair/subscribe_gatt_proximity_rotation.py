@@ -64,11 +64,11 @@ def serial_proximity_values():
     if len(line_bytes) > 0:
 
         # Convert the bytes into string
-        line = line_bytes.decode('utf-8')
+        proximity_value_str = line_bytes.decode('utf-8')
         # Split the string using commas as separator, we get a list of strings
-        values = line.split(',')
+        proximity_value = proximity_value_str.split(',')
         # Use the first element of the list as property id
-        property_id = values.pop(0)
+        property_id = proximity_values.pop(0)
         # Get the property from the thing
         prop = my_thing.properties[property_id]
         # If we find the property, we update the values (rest of the list)
@@ -77,7 +77,7 @@ def serial_proximity_values():
         print (line)
 
         if prop is not None:
-            prop.update_values([float(x) for x in values])
+            prop.update_value([proximity_value])
         # Otherwise, we show a warning
         else:
             print('Warning: unknown property ' + prox_property_id)
@@ -113,34 +113,15 @@ def handle_rotation_data(handle, value_bytes):
         print("Rotation Success 1")
 
         if reseted_value > RECOMMENDED_NUM_ROTATION:
-            # tired = True
             print("Tired - True - 1 sent")
             ser.write('1'.encode())
-            # nudged = True
             time.sleep(6)
             reseted_value = 0
             ser.write('0'.encode())
             print("Not Tired - 0 sent")
 
-
-
     except:
         print("Can't parse - Rotation")
-
-# def check_tiredness():
-#     global reseted_value
-#     global RECOMMENDED_NUM_ROTATION
-#     # global nudged
-#
-#     if reseted_value[0] > RECOMMENDED_NUM_ROTATION:
-#         # tired = True
-#         print("Tired - True - 1 sent")
-#         ser.write('1'.encode())
-#         # time.sleep(10)
-#         # ser.write('0'.encode())
-#     else:
-#         print ("Tired - False - 0 Sent")
-#         ser.write('0'.encode())
 
 
 def discover_characteristic(device):
