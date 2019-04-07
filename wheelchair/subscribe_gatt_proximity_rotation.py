@@ -132,6 +132,7 @@ def handle_rotation_data(handle, value_bytes):
 
 def check_tiredness():
     global reseted_value
+    global RECOMMENDED_NUM_ROTATION:
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
