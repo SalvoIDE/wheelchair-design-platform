@@ -59,32 +59,30 @@ def find_or_create(property_name, property_type):
 # and update the property values
 def serial_proximity_values():
     # Read one line
-    read_proximity = ser.readline()
+    line_bytes = ser.readline()
 
-    # Convert the bytes into string
-    line = line_bytes.decode('utf-8')
-    # Split the string using commas as separator, we get a list of strings
-    values = line.split(',')
-    # Use the first element of the list as property id
-    prox_property_id = values.pop(0)
-   # Get the property from the thing
-    prop = my_thing.properties[prox_property_id]
-    # If we find the property, we update the values (rest of the list)
-    print("Proximity:")
-    print(read_proximity)
-    print(", Line:")
-    print (line)
+    if len(line_bytes) > 0:
 
-    if prop is not None:
-        prop.update_values([float(x) for x in values])
-    # Otherwise, we show a warning
-    else:
-        print('Warning: unknown property ' + prox_property_id)
-    # Finally, we call this method again
+        # Convert the bytes into string
+        line = line_bytes.decode('utf-8')
+        # Split the string using commas as separator, we get a list of strings
+        values = line.split(',')
+        # Use the first element of the list as property id
+        prox_property_id = values.pop(0)
+        # Get the property from the thing
+        prop = my_thing.properties[prox_property_id]
+        # If we find the property, we update the values (rest of the list)
+        print("Proximity:")
+        print(read_proximity)
+        print(", Line:")
+        print (line)
 
-
-
-serial_proximity_values()
+        if prop is not None:
+            prop.update_values([float(x) for x in values])
+        # Otherwise, we show a warning
+        else:
+            print('Warning: unknown property ' + prox_property_id)
+        # Finally, we call this method again
 
 def handle_rotation_data(handle, value_bytes):
     """
@@ -94,6 +92,8 @@ def handle_rotation_data(handle, value_bytes):
     # decode data received from orientation sensor into rotation value
     rot_value_str = value_bytes.decode('utf-8')
     print("Received rotation data: %s (handle %d)" % (rot_value_str, handle))
+
+    serial_proximity_values()
 
     try:
         global rotation_value
@@ -112,7 +112,6 @@ def handle_rotation_data(handle, value_bytes):
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
-
 
         if reseted_value > RECOMMENDED_NUM_ROTATION:
             # tired = True
