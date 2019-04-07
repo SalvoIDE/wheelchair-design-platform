@@ -84,7 +84,8 @@ def serial_proximity_values():
         #     print('Warning: unknown property ' + prox_property_id)
         # # # Finally, we call this method again
 
-
+        if proximity < 100:
+            "sent 0"
     except:
         print("cant parse proximity")
 
@@ -112,7 +113,6 @@ def handle_rotation_data(handle, value_bytes):
         reseted_value += dif_prev_rotation
 
         serial_proximity_values()
-        check_tiredness()
 
         print("Total rotations:")
         print(total_rotation_value)
@@ -126,11 +126,8 @@ def handle_rotation_data(handle, value_bytes):
         print("Can't parse - Rotation")
 
 def check_tiredness():
-    global proximity
     global reseted_value
     global RECOMMENDED_NUM_ROTATION
-    if proximity > 156
-        "sent 0"
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
