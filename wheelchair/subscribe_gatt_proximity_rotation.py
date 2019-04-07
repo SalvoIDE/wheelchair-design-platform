@@ -84,6 +84,7 @@ def serial_proximity_values():
 
         if proximity_value[0] < 100:
             check_tiredness()
+            
         else:
             global reseted_value
             reseted_value = 0
