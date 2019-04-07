@@ -97,7 +97,7 @@ void loop() {
 //  Serial.print(",");
   Serial.print(proximity_value);
   Serial.print(",");
-//  Serial.println("");
+  Serial.println("");
   char command = Serial.read();
      if (command == '1') {
        tired = true;
