@@ -68,9 +68,9 @@ def serial_proximity_values():
         # Split the string using commas as separator, we get a list of strings
         values = line.split(',')
         # Use the first element of the list as property id
-        prox_property_id = values.pop(0)
+        property_id = values.pop(0)
         # Get the property from the thing
-        prop = my_thing.properties[prox_property_id]
+        prop = my_thing.properties[property_id]
         # If we find the property, we update the values (rest of the list)
 
         print("Proximity:")
