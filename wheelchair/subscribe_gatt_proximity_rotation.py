@@ -86,7 +86,7 @@ def serial_proximity_values():
         #     print('Warning: unknown property ' + prox_property_id)
         # # Finally, we call this method again
 
-    else:
+    except:
         print("cant parse proximity")
         # if proximity_value_str[0] < 100:
         #     check_tiredness()
