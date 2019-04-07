@@ -44,8 +44,7 @@ void vibration_enabled() {
 void green_led(){
 
 //  for(int i=0;i<NUMPIXELS;i++){
-    Serial.println("User not tired - green light...");
-
+//    Serial.println("User not tired - green light...");
     // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
     pixels.setPixelColor(0, pixels.Color(0,150,100)); // Moderately bright green color.
     pixels.setPixelColor(1, pixels.Color(0,150,100)); // Moderately bright green color.
@@ -64,7 +63,7 @@ void green_led(){
 void yellow_led() {
 //    for(int i=0;i<NUMPIXELS;i++){
     // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-    Serial.println("User tired - yellow light...");
+//    Serial.println("User tired - yellow light..."); 
     pixels.setPixelColor(0, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(1, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(2, pixels.Color(200,50,0)); // Moderately bright green color.
