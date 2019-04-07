@@ -69,7 +69,7 @@ def serial_proximity_values():
         # Split the string using commas as separator, we get a list of strings
         proximity_value = proximity_value_str.split(',')
         # Use the first element of the list as property id
-        proximity = proximity_value_str
+        proximity = proximity_value_str[0]
         # property_id = proximity_value.pop(0)
         # # Get the property from the thing
         # prop = my_thing.properties[property_id]
