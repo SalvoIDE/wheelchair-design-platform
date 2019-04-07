@@ -77,7 +77,6 @@ def serial_proximity_values():
 
         print("Proximity:")
         print(proximity_value_str)
-        print(proximity_value)
         #
         # if prop is not None:
         #     prop.update_value([proximity_value])
