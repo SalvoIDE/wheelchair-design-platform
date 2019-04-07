@@ -67,7 +67,7 @@ def serial_proximity_values():
     try:
         proximity_value_str = line_bytes.decode('utf-8')
         # Split the string using commas as separator, we get a list of strings
-        # proximity_value = proximity_value_str.split(',')
+        proximity_value = proximity_value_str.split(',')
         # Use the first element of the list as property id
         proximity = proximity_value_str
         # property_id = proximity_value.pop(0)
@@ -83,7 +83,7 @@ def serial_proximity_values():
         # else:
         #     print('Warning: unknown property ' + prox_property_id)
         # # # Finally, we call this method again
-        if proximity > 1:
+        if proximity_value_str > 1:
             # check_tiredness()
             # ser.write('1'.encode())
             print("1 sent")

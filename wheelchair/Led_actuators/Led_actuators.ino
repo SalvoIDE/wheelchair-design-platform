@@ -96,7 +96,7 @@ void loop() {
 //  Serial.print("surf-wheel-proximity-b6f1");
 //  Serial.print(",");
   Serial.print(proximity_value);
-//  Serial.print(",");
+  Serial.print(",");
   Serial.println("");
   char command = Serial.read();
      if (command == '1') {
