@@ -8,7 +8,6 @@ from dotenv import load_dotenv  # To load the environment variables from the .en
 import serial                   # To connect via the serial port
 import time
 import timeit
-with open(path, encoding="utf8", errors='ignore') as f:
 
 # DCD Hub
 from dcd.entities.thing import Thing
@@ -65,9 +64,10 @@ def serial_proximity_values():
     # if len(line_bytes) > 0:
     #     # Convert the bytes into string
     print("Proxmity:")
-    proximity_value_str = line_bytes.decode('utf-8')
-    # Split the string using commas as separator, we get a list of strings
-    proximity_value = proximity_value_str.split(',')
+    with open(path, encoding="utf8", errors='ignore') as f:
+        proximity_value_str = line_bytes.decode('utf-8')
+        # Split the string using commas as separator, we get a list of strings
+        proximity_value = proximity_value_str.split(',')
     # Use the first element of the list as property id
     # proximity_value = float(proximity_value_str)
 
