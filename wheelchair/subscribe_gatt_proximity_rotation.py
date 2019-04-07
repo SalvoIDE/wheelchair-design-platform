@@ -75,7 +75,7 @@ def serial_proximity_values():
         # prop = my_thing.properties[property_id]
         # # If we find the property, we update the values (rest of the list)
         print("Proximity:")
-        print(proximity_value_str)
+        print(proximity_value_str[0])
         #
         # if prop is not None:
         #     prop.update_value([proximity_value])
@@ -84,7 +84,7 @@ def serial_proximity_values():
         #     print('Warning: unknown property ' + prox_property_id)
         # # # Finally, we call this method again
 
-        if proximity_value_str[] < 100:
+        if proximity_value_str[0] < 100:
             "sent 0"
     except:
         print("cant parse proximity")
