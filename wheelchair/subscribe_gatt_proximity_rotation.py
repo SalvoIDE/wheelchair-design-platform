@@ -85,7 +85,7 @@ def serial_proximity_values():
         # # Finally, we call this method again
         if proximity_value_str[0] < 100:
             # check_tiredness()
-            ser.write('1'.encode())
+            # ser.write('1'.encode())
             print("1 sent")
 
         # else:
