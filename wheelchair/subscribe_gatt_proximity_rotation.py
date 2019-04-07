@@ -82,7 +82,7 @@ def serial_proximity_values():
         #     print('Warning: unknown property ' + prox_property_id)
         # # Finally, we call this method again
 
-        if proximity_value[0] < 100:
+        if proximity_value[1] < 100:
             check_tiredness()
 
         else:
