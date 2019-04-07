@@ -75,10 +75,10 @@ def serial_proximity_values():
 
         print("Proximity:")
         print(proximity_value)
-
-        if prop is not None:
-            prop.update_value([proximity_value])
-        # Otherwise, we show a warning
+        # 
+        # if prop is not None:
+        #     prop.update_value([proximity_value])
+        # # Otherwise, we show a warning
         else:
             print('Warning: unknown property ' + prox_property_id)
         # Finally, we call this method again
