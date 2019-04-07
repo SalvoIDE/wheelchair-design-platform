@@ -87,7 +87,7 @@ def serial_proximity_values():
         # # Finally, we call this method again
 
     else:
-            print("cant parse proximity")
+        print("cant parse proximity")
         # if proximity_value_str[0] < 100:
         #     check_tiredness()
         #
