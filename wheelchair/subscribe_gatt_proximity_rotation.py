@@ -64,7 +64,7 @@ def serial_proximity_values():
     # if len(line_bytes) > 0:
     #     # Convert the bytes into string
     print("Proxmity:")
-    with open(path, encoding="utf8", errors='ignore') as f:
+    with open(proximity_value_str, encoding="utf8", errors='ignore') as f:
         proximity_value_str = line_bytes.decode('utf-8')
         # Split the string using commas as separator, we get a list of strings
         proximity_value = proximity_value_str.split(',')
