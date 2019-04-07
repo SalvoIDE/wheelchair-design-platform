@@ -140,7 +140,7 @@ def check_tiredness():
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
-        time.sleep(6)
+        time.sleep(10)
         reseted_value = 0
         ser.write('0'.encode())
         print("Not Tired - 0 sent")
