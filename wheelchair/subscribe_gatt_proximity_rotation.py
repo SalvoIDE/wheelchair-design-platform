@@ -104,7 +104,7 @@ def handle_rotation_data(handle, value_bytes):
     rot_value_str = value_bytes.decode('utf-8')
     print("Received rotation data: %s (handle %d)" % (rot_value_str, handle))
 
-    serial_proximity_values()
+
 
     try:
         global rotation_value
@@ -116,6 +116,8 @@ def handle_rotation_data(handle, value_bytes):
         dif_prev_rotation = total_rotation_value - rotation_value
         rotation_value = total_rotation_value
         reseted_value += dif_prev_rotation
+
+        serial_proximity_values()
 
         print("Total rotations:")
         print(total_rotation_value)
