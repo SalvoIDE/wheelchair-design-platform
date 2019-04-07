@@ -90,7 +90,7 @@ def serial_proximity_values():
             reseted_value = 0
             ser.write('0'.encode())
             print("Somebody pushing - 0 sent")
-            
+
     except:
         print("cant parse proximity")
 
