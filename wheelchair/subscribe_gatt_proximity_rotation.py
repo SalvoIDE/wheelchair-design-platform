@@ -61,19 +61,19 @@ def serial_proximity_values():
     # Read one line
     line_bytes = ser.readline()
 
-    if len(line_bytes) > 0:
-        # Convert the bytes into string
-        print("Proxmity:")
-        proximity_value_str = line_bytes.decode('utf-8')
-        # Split the string using commas as separator, we get a list of strings
-        proximity_value = proximity_value_str.split(',')
-        # Use the first element of the list as property id
-        # proximity_value = float(proximity_value_str)
+    # if len(line_bytes) > 0:
+    #     # Convert the bytes into string
+    print("Proxmity:")
+    proximity_value_str = line_bytes.decode('utf-8')
+   # Split the string using commas as separator, we get a list of strings
+    proximity_value = proximity_value_str.split(',')
+    # Use the first element of the list as property id
+    # proximity_value = float(proximity_value_str)
 
-        # property_id = proximity_value.pop(0)
-        # # Get the property from the thing
-        # prop = my_thing.properties[property_id]
-        # # If we find the property, we update the values (rest of the list)
+    # property_id = proximity_value.pop(0)
+    # # Get the property from the thing
+    # prop = my_thing.properties[property_id]
+    # # If we find the property, we update the values (rest of the list)
 
         print("Proximity:")
         print(proximity_value_str)
