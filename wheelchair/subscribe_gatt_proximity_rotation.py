@@ -84,8 +84,8 @@ def serial_proximity_values():
         #     print('Warning: unknown property ' + prox_property_id)
         # # # Finally, we call this method again
 
-        if proximity_value_str[0] < 100:
-            "sent 0"
+        if proximity < 100:
+            print("sent0")
     except:
         print("cant parse proximity")
 
