@@ -55,8 +55,8 @@ def find_or_create(property_name, property_type):
                                  property_type=property_type)
     return my_thing.find_property_by_name(property_name)
 
-Read the next line from the serial port
-and update the property values
+# Read the next line from the serial port
+# and update the property values
 def serial_proximity_values():
     # Read one line
     read_proximity = ser.readline()
