@@ -62,6 +62,7 @@ def serial_proximity_values():
     line_bytes = ser.readline()
 
     if len(line_bytes) > 0:
+
         # Convert the bytes into string
         proximity_value_str = line_bytes.decode('utf-8')
         # Split the string using commas as separator, we get a list of strings
@@ -85,10 +86,6 @@ def serial_proximity_values():
         if proximity_value[0] < 100
             check_tiredness()
         else
-            global reseted_value
-            reseted_value = 0
-            ser.write('0'.encode())
-            print("Somebody pushing - 0 sent")
 
 
 def handle_rotation_data(handle, value_bytes):
@@ -113,22 +110,22 @@ def handle_rotation_data(handle, value_bytes):
         rotation_value = total_rotation_value
         reseted_value += dif_prev_rotation
 
-        print("Total rotations:")
         print(total_rotation_value)
-        print("Rotations relevant for tiredness:")
         print(reseted_value)
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
 
+        if reseted_value > RECOMMENDED_NUM_ROTATION:
+            print("Tired - True - 1 sent")
+            ser.write('1'.encode())
+            time.sleep(6)
+            reseted_value = 0
+            ser.write('0'.encode())
+            print("Not Tired - 0 sent")
+
     except:
         print("Can't parse - Rotation")
-
-def check_tiredness():
-    global reseted value
-    if reseted_value > RECOMMENDED_NUM_ROTATION:
-        print("Tired - True - 1 sent")
-        ser.write('1'.encode())
 
 
 def discover_characteristic(device):
