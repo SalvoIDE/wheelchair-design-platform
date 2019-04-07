@@ -111,10 +111,7 @@ def handle_rotation_data(handle, value_bytes):
         reseted_value += dif_prev_rotation
 
         serial_proximity_values()
-
-        global proximity
-        if proximity < 100:
-            print("sent 0")
+        check_tiredness()
 
         print("Total rotations:")
         print(total_rotation_value)
