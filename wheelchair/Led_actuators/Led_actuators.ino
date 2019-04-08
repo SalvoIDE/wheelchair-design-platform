@@ -109,26 +109,26 @@ if (proximity_value > 100) {
 else {
     char command = Serial.read();
      if (command == '1') {
-       tired = true;
-       vibration = true;
+       yellow_led();
+       vibration_enabled();
       } else if (command == '0') {
-        tired = false;
         green_led();
+        analogWrite(VIB_PIN, LOW);
       }
 }
 
-if (vibration) {
-  vibration_enabled();
-}
-
-if (tired) {
-  yellow_led();
-}
-else {
-  green_led();
-  }
-
-if (vibration) {
-  vibration_enabled();
-}
+//if (vibration) {
+//  vibration_enabled();
+//}
+//
+//if (tired) {
+//  yellow_led();
+//}
+//else {
+//  green_led();
+//  }
+//
+//if (vibration) {
+//  vibration_enabled();
+//}
 }
