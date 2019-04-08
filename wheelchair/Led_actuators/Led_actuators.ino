@@ -74,7 +74,7 @@ void yellow_led() {
     pixels.setPixelColor(8, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(9, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.show(); // This sends the updated pixel color to the hardware.
-
+    delay(5000);
 
 }
 
@@ -107,8 +107,8 @@ if (proximity_value > 100) {
 else {
     char command = Serial.read();
      if (command == '1') {
-       yellow_led();
        vibration_enabled();
+       yellow_led();
       } else if (command == '0') {
         green_led();
         analogWrite(VIB_PIN, LOW);
