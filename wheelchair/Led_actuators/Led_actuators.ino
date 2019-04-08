@@ -37,9 +37,6 @@ void vibration_enabled() {
    analogWrite(VIB_PIN, i);
    delay(100);
    analogWrite(VIB_PIN, 0);
-//   delay(200);
-//   delay (1000);
-//   vibration = false;
 }
 
 
@@ -103,7 +100,8 @@ void loop() {
 
 
 if (proximity_value > 100) {
-    tired = false;
+    green_led();
+    analogWrite(VIB_PIN, LOW);
 }
 
 else {

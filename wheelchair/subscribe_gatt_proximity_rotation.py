@@ -137,10 +137,12 @@ def check_tiredness():
     print("Checking tiredness!")
     global reseted_value
     global RECOMMENDED_NUM_ROTATION
+
+    # when the user has pushed themselves to be tired
     if reseted_value > RECOMMENDED_NUM_ROTATION:
         print("Tired - True - 1 sent")
         ser.write('1'.encode())
-        time.sleep(10)
+        time.sleep(8)
         reseted_value = 0
         ser.write('0'.encode())
         print("Not Tired - 0 sent")
