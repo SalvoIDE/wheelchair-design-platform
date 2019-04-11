@@ -11,7 +11,7 @@
 #define LED_PIN 2
 #define VIB_PIN 3
 #define PROX_PIN A0
-int proximity_value = - 10000;       
+int proximity_value = - 10000;
 //char property_id = "surf-wheel-proximity-b6f1";
 
 // How many NeoPixels are attached to the Arduino?
@@ -62,7 +62,7 @@ void green_led(){
 void yellow_led() {
 //    for(int i=0;i<NUMPIXELS;i++){
     // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-//    Serial.println("User tired - yellow light..."); 
+//    Serial.println("User tired - yellow light...");
     pixels.setPixelColor(0, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(1, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(2, pixels.Color(200,50,0)); // Moderately bright green color.
@@ -73,26 +73,6 @@ void yellow_led() {
     pixels.setPixelColor(7, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(8, pixels.Color(200,50,0)); // Moderately bright green color.
     pixels.setPixelColor(9, pixels.Color(200,50,0)); // Moderately bright green color.
-    pixels.show(); // This sends the updated pixel color to the hardware.
-
-}
-
-
-
-void purple_led() {
-//    for(int i=0;i<NUMPIXELS;i++){
-    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-//    Serial.println("User tired - yellow light..."); 
-    pixels.setPixelColor(0, pixels.Color(200,50,255)); // Moderately bright green color.
-    pixels.setPixelColor(1, pixels.Color(200,50,255)); // Moderately bright green color.
-    pixels.setPixelColor(2, pixels.Color(200,50,255)); // Moderately bright green color.
-    pixels.setPixelColor(3, pixels.Color(200,50,255)); // Moderately bright green color.
-    pixels.setPixelColor(4, pixels.Color(200,50,255)); // Moderately bright green color.
-    pixels.setPixelColor(5, pixels.Color(200,50,255)); // Moderately bright green color.
-    pixels.setPixelColor(6, pixels.Color(200,50,255)); // Moderately bri§ght green color.
-    pixels.setPixelColor(7, pixels.Color(200,50,255)); // Moderately bright green color.
-    pixels.setPixelColor(8, pixels.Color(200,50,255)); // Moderately bright green color.
-    pixels.setPixelColor(9, pixels.Color(200,50,255)); // Moderately bright green color.
     pixels.show(); // This sends the updated pixel color to the hardware.
 
 }

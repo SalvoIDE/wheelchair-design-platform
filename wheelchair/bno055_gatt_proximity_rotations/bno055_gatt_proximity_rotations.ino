@@ -71,7 +71,7 @@ void setup(void) {
   delay(300);
   boolean success;
 
-  pinMode(PROXIMITY_PIN, INPUT);                // setting pinmode to read analog value 
+  pinMode(PROXIMITY_PIN, INPUT);                // setting pinmode to read analog value
 
 
   Serial.begin(115200);
@@ -105,12 +105,6 @@ void setup(void) {
   success = ble.sendCommandWithIntReply( F("AT+GATTADDSERVICE=UUID128=00-11-00-11-44-55-66-77-88-99-AA-BB-CC-DD-EE-FF"), &imuServiceId);
   if (! success) {
     error(F("Could not add Orientation service."));
-  }
-
-  // Add the Proximity characteristic
-  success = ble.sendCommandWithIntReply( F("AT+GATTADDCHAR=UUID128=02-11-88-33-44-55-66-77-88-99-AA-BB-CC-DD-EE-FF,PROPERTIES=0x10,MIN_LEN=1,MAX_LEN=17,VALUE=\"\""), &proximityCharId);
-  if (! success) {
-    error(F("Could not add Proximity characteristic."));
   }
 
 // Add the Rotation characteristic
@@ -167,10 +161,9 @@ void rotation() {
   float axis_value = event.orientation.x;   // replace this with whatever axis you're tracking
   not_first_loop = (not_first_loop)?compute_rotations(axis_value, &global_rotations) : true;
 
-  // Command is sent when \n (\r) or println is called
+
   // AT+GATTCHAR=CharacteristicID,value
   ble.print( F("AT+GATTCHAR=") );
-//  ble.print( F(",") );
   ble.print( rotationCharId );
   ble.print( F(",") );
 //  ble.print( F("Rotations" ) );
@@ -181,39 +174,10 @@ void rotation() {
 
 
 
-void proximity() {
-  // Get Euler angle data
-
-  value = analogRead(PROXIMITY_PIN);       // reading our analog voltage, careful we only have 10 bit resolution so each
-                                    // measurement step is only 5V ÷ 1024, so our result will be 0 - 1023
-
-  // if value is within the range of [ previous - σ , previous + σ], ignore it (if value is relatively the same)
-//  // this will help with having data ocuppy your buffer that is not a significant deviation.
-//  if( value >= (prev_value - deviation) && value <= (prev_value + deviation) )
-//    return;
-//
-///UNCOMMENT TO IGNORE MORE
-
-
-  prev_value = value;             // Here we have the previous saved variable.
-
-
-  // Command is sent when \n (\r) or println is called
-  // AT+GATTCHAR=CharacteristicID,value
-  ble.print( F( "AT+GATTCHAR=") );
-//  ble.print( F(",") );
-  ble.print( proximityCharId );
-  ble.print( F(",") );
-//  ble.print( F("Proximity") );
-//  ble.print( F(",") );
-  ble.println(String(value) + ".0");
-
-}
-
 
 void loop(void) {
 
-  proximity();
+  // we run the rotation function
   rotation();
 
 
