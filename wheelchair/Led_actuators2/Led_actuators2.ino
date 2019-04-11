@@ -111,6 +111,8 @@ void setup() {
 
 void loop() {
   proximity_value = analogRead(PROX_PIN);
+  yellow_led();
+  delay(5000);
 //  Serial.print("surf-wheel-proximity-b6f1");
 //  Serial.print(",");
   Serial.print(proximity_value);
@@ -119,7 +121,7 @@ void loop() {
 
 
 if (proximity_value > 100) {
-    purple_led();
+    green_led();
     analogWrite(VIB_PIN, LOW);
 }
 

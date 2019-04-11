@@ -26,16 +26,16 @@ GATT_CHARACTERISTIC_ROTATION= "06118733-4455-6677-8899-AABBCCDDEEFF"
 
 # Many devices, e.g. Fitbit, use random addressing, this is required to connect.
 ADDRESS_TYPE = pygatt.BLEAddressType.random
-# Recommended number of rotation
-# Did we already nudged
 
-#this is the rotations until the user is tired
+
+#this is the rotations that determine when the user is tired
+#we use 3 rotations to scale down the number for the exhibition
 RECOMMENDED_NUM_ROTATION = 3
 # nudged = False
 tired = False
 proximity = None
 total_rotation_value = None
-rotation_value = 0
+rotation_value =
 
 #this is a value of the rotations that are relevant
 #for determining if the user is tired or not
@@ -50,7 +50,7 @@ ser = serial.Serial(
     baudrate = 9600,
     timeout = 2)
 
-
+# this is the definition of the function that finds/creates the proximity property
 def find_or_create(property_name, property_type):
     """Search a property by name, create it if not found, then return it."""
     if my_thing.find_property_by_name(property_name) is None:
@@ -63,50 +63,47 @@ def find_or_create(property_name, property_type):
 # and update the property values
 # Proximity is measured from serial because cables are entangled on wheels
 def serial_proximity_values():
+
     # Read one line from serial
     line_bytes = ser.readline()
-    # if len(line_bytes) > 0:
-    #     # Convert the bytes into string
+
     try:
         # Convert bytes into string
         proximity_value_str = line_bytes.decode('utf-8')
         # Split the string using commas as separator, we get a list of strings
         proximity_value = proximity_value_str.split(',')
-        # Use the first element of the list as property id
-        # property_id = proximity_value.pop(0)
-        # # Get the property from the thing
-        # prop = my_thing.properties[property_id]
-        # # If we find the property, we update the values (rest of the list)
+
+        #print the word proximity
         print("Proximity:")
+
+        #print the value of proximity string in position 0
+        #this gets the value without the ",""
         print(proximity_value_str[0])
-        #
-        # if prop is not None:
-        #     prop.update_value([proximity_value])
-        # # Otherwise, we show a warning
-        # else:
-        #     print('Warning: unknown property ' + prox_property_id)
-        # # # Finally, we call this method again
 
     # in case something does not work
     except:
         print("Can't Parse Proximity")
 
-
+# definition of rotation function through bluetooth
 def handle_rotation_data(handle, value_bytes):
     """
     handle -- integer, characteristic read handle the data was received on
     value_bytes -- bytearray, the data returned in the notification
     """
+
     # decode data received from orientation sensor into rotation value
     rot_value_str = value_bytes.decode('utf-8')
     print("Received rotation data: %s (handle %d)" % (rot_value_str, handle))
 
     try:
+        #global calls the variables that were defined at the top of the code
         global rotation_value
         global dif_prev_rotation
         global total_rotation_value
         global reseted_value
         global nudged
+
+        # this is the total number of rotations recorded by the sensor
         total_rotation_value = float(rot_value_str)
 
         # Calculate the difference between this measurement and the previous one
@@ -114,38 +111,56 @@ def handle_rotation_data(handle, value_bytes):
         rotation_value = total_rotation_value
 
         # value that adds up the difference every time it runs
+        # we use the reseted value to determine tired/not tired
         reseted_value += dif_prev_rotation
 
-        # Call the function that reads proximity
+        # Call the function that reads proximity, defined before
         serial_proximity_values()
 
         # Call the function that checks if the user is tired
         check_tiredness()
 
+        # let's print our relevant values
         print("Total rotations:")
         print(total_rotation_value)
         print("Rotations relevant for tiredness:")
         print(reseted_value)
+
+        # find the property in the hub to display it in Grafana
         find_or_create("surf-wheel-rotation",
                        PropertyType.ONE_DIMENSION).update_values([rotation_value])
         print("Rotation Success 1")
 
+    #if something doesn't run properly
     except:
         print("Can't parse - Rotation")
 
+
+# this is the function that determines if the user is tired or not
 def check_tiredness():
+    # with this print we know that the program is inside here
     print("Checking tiredness!")
+
+    #let's call variables defined at the top that we are going to use
     global reseted_value
     global RECOMMENDED_NUM_ROTATION
 
-    # when the user has pushed themselves to be tired
+    # when the user has pushed themselves enough to be tired
     if reseted_value > RECOMMENDED_NUM_ROTATION:
+        # let us know you have sent a 1 to the Arduino
         print("Tired - True - 1 sent")
+
+        # write a 1 through serial to Arduino
         ser.write('1'.encode())
+
+        # we sleep the program for 15 seconds before resetting it
         time.sleep(15)
+
+        # we reset the value to 0 so it can start adding up and counting rotations again
         reseted_value = 0
+
+        # we send a 0 through the serial
         ser.write('0'.encode())
-        print("Not Tired - 0 sent")
 
 
 def discover_characteristic(device):
