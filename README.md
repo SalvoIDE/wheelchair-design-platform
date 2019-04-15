@@ -6,7 +6,7 @@ workshop materials, code examples and also a compilation of resources to foster
 a prospering research and design community around wheelchair users.
 
 
-![IoT1 Exhibition](/docs/workshops/images/iot1_exhibition.jpg)
+![Power Scheme](/wheelchair/power schemeZoo_Orientation_Proximity_Vibrators_LEDs.jpg)
 
 ## Workshops
 
